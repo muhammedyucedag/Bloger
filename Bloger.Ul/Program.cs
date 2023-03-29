@@ -1,3 +1,6 @@
+using Bloger.DataAccess.Concrete;
+using Bloger.Entity.Concrete;
+
 namespace Bloger.Ul
 {
     public class Program
@@ -6,10 +9,23 @@ namespace Bloger.Ul
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //identity
+            builder.Services.AddDbContext<Context>();
+            builder.Services.AddIdentity<User, Role>(
+                x =>
+                {
+                    x.Password.RequireUppercase = false;
+                    x.Password.RequireNonAlphanumeric = false;
+
+                }).AddEntityFrameworkStores<Context>();
+            builder.Services.AddHttpContextAccessor();
+
+
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
