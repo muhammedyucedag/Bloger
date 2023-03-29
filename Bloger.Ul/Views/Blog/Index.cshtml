@@ -1,0 +1,80 @@
+﻿@model List<Blog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4 posts-list">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-4 col-md-6">
+
+                    <article>
+
+                        <div class="post-img">
+                            <img src="@item.BlogImage" alt="" class="img-fluid">
+                        </div>
+                        <p class="post-category">@item.Category.CategoryName</p>
+                        <h2 class="title">
+                            <a href="/Blog/BlogDetails/@item.BlogId">@item.BlogTitle</a>
+                        </h2>
+
+                        @*blog yazıların karakter sayısında göre ayarlandı*@
+                        <p class="card-text mb-3">
+                            @{
+                                if (item.BlogContent.Length < 130)
+                                {
+                                    @item.BlogContent
+                                    
+                                }
+                                else
+                                {
+                                    @item.BlogContent.Substring(0,130)
+                                    
+                                }
+                            }...
+
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="post-meta">
+                                @*<p class="post-author-list">@item.User.UserName</p>*@
+                                <p class="post-date">
+
+                                    <time datetime="2022-01-01">@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time>
+
+
+
+                                </p>
+                            </div>
+                        </div>
+
+
+
+                    </article>
+
+                </div>
+
+               
+            }
+        </div>
+
+        <div class="blog-pagination">
+            <ul class="justify-content-center">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+</section>
+
