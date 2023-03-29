@@ -15,13 +15,13 @@ namespace Bloger.Entity.Concrete
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "Kategori Adını Boş geçemezsiniz")]
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; }
 
         [Required(ErrorMessage = "Kategori Açıklamasını Boş geçemezsiniz")]
-        public string? CategoryDescription { get; set; }
+        public string CategoryDescription { get; set; }
         public bool CategoryStatus { get; set; }
 
-        public virtual List<Blog>? Blogs { get; set; } // kategorinin birden fazla notları varıdr.
+        public virtual List<Blog> Blogs { get; set; } // kategorinin birden fazla notları varıdr.
 
     }
 }
