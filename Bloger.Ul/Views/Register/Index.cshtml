@@ -1,0 +1,69 @@
+﻿@model UserSignUpViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Form-v5 by Colorlib</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Font-->
+    <link rel="stylesheet" type="text/css" href="~/Register/css/roboto-font.css">
+    <link rel="stylesheet" type="text/css" href="~/Register/fonts/font-awesome-5/css/fontawesome-all.min.css">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="~/Register/css/style.css" />
+</head>
+<body>
+    <div class="page-content">
+        <div class="form-v5-content">
+            <form role="form" asp-action="Index" class="form-detail">
+                <h2>
+                    Hesap Kayıt Formu
+                </h2>
+                <div class="form-row">
+                    <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
+                    <label for="full-name">Ad Soyad</label>
+                    <input type="text" asp-for="@Model.NameSurname" class="form-control" placeholder="Ad Soyad" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <br/>
+                <div class="form-row">
+                    <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                    <label for="full-name">Kullanıcı Adınız</label>
+                    <input type="text" asp-for="@Model.UserName" class="form-control" placeholder="Kullanıcı Adınız">
+                    <i class="fas fa-user"></i>
+                </div>
+                <br />
+                <div class="form-row">
+                    <span asp-validation-for="@Model.Mail" class="text-danger"></span>
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control"  asp-for="@Model.Mail" placeholder="E-Mail Adress">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <br />
+                <div class="form-row">
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    <label>Şifre</label>
+                    <input type="password" class="form-control" asp-for="@Model.Password" placeholder="Şifreniz">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <br />
+                <div class="form-row">
+                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                    <label>Şifre Tekrarı</label>
+                    <input type="password" class="form-control" asp-for="@Model.ConfirmPassword" placeholder="Şifre Tekrarı" required="">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <br />
+                <div class="form-row-last">
+                    <input type="submit" name="register" class="register" value="Kayıt Ol">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
