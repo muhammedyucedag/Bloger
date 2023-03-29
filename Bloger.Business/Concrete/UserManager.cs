@@ -9,7 +9,7 @@ using Bloger.Entity.Concrete;
 
 namespace Bloger.Business.Concrete
 {
-    internal class UserManager : IUserService
+    public class UserManager : IUserService
     {
         private IUserDal _userDal;
 

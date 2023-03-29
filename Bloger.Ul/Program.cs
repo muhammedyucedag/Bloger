@@ -23,8 +23,9 @@ namespace Bloger.Ul
 
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddSession();
 
-            var app = builder.Build();
+			var app = builder.Build();
 
 
             // Configure the HTTP request pipeline.
@@ -37,6 +38,7 @@ namespace Bloger.Ul
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
