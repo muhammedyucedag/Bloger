@@ -12,17 +12,17 @@ namespace Bloger.Entity.Concrete
         //virtual public Category Category { get; set; } 
         [Key]
         public int BlogId { get; set; }
-        public string? BlogTitle { get; set; }
-        public string? BlogContent { get; set; }
+        public string BlogTitle { get; set; }
+        public string BlogContent { get; set; }
         public string? BlogImage { get; set; }
         public DateTime BlogCreateDate { get; set; }
         public bool BlogStatus { get; set; }
         public int CategoryId { get; set; }
-        public virtual Category? Category { get; set; }
+        public virtual Category Category { get; set; }
         public int UserId { get; set; }
-        public virtual User? User { get; set; }
+        public virtual User User { get; set; }
 
-        public virtual List<Comment>? Comments { get; set; } // Blogların birden fazla yorumu varıdr.
+        public virtual List<Comment> Comments { get; set; } // Blogların birden fazla yorumu varıdr.
 
 
     }
