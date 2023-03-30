@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Category>
+
+    <div class="sidebar-item categories">
+        <h3 class="sidebar-title">Kategoriler</h3>
+        <ul class="mt-3">
+        @foreach (var item in Model)
+        {
+            <li><a href="#">@item.CategoryName <span>(25)</span></a></li>
+        }
+        </ul>
+    </div><!-- End sidebar categories-->
+
