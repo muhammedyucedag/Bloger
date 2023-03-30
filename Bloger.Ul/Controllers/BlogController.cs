@@ -12,5 +12,12 @@ namespace Bloger.Ul.Controllers
             var values = blogManager.GetBlogListWithCategory();
             return View(values);
         }
+
+        public IActionResult BlogDetails(int id)
+        {
+            ViewBag.BlogId = id;
+            var values = blogManager.GetBlogById(id);
+            return View(values);
+        }
     }
 }
