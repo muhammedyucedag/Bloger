@@ -52,5 +52,10 @@ namespace Bloger.Business.Concrete
         {
             return _blogDal.GetListAll(x => x.User!.Id == id).ToList();
         }
+
+        public List<Blog> GetBlogById(int id)
+        {
+            return _blogDal.GetListAll(x => x.BlogId == id);
+        }
     }
 }
