@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloger.Entity.Concrete;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.DataAccess.Concrete
 {
-    public class Context:IdentityDbContext<User,Role,int>
+    public class Context : IdentityDbContext<User, Role, int>
     {
         // proje ayağa kalktığında database varsa onu kullan yoksa oluştur.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +30,9 @@ namespace Bloger.DataAccess.Concrete
             if (optionsBuilder.IsConfigured == false)
             {
                 optionsBuilder.UseSqlServer(
-                    "Server=DESKTOP-M8JLN9L\\SQLEXPRESS;Database=Bloger; integrated security=true;");
+                    //"Server=DESKTOP-M8JLN9L\\SQLEXPRESS;Database=Bloger; integrated security=true;");
+                    //"Data Source=104.247.162.242\\MSSQLSERVER2017; Initial Catalog=akadem58_my; Persist Security Info=True; User ID=akadem58_my; Password=Rnqo30*59 providerName = System.Data.SqlClient");
+                    "Server = 104.247.162.242\\MSSQLSERVER2017; Database = akadem58_my; User Id = akadem58_my; password = Rnqo30*59; Trusted_Connection = False; MultipleActiveResultSets = true");
             }
 
         }
