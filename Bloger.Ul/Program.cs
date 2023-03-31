@@ -1,6 +1,7 @@
 using Bloger.DataAccess.Concrete;
 using Bloger.Entity.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Bloger.Ul
@@ -22,6 +23,7 @@ namespace Bloger.Ul
                 }).AddEntityFrameworkStores<Context>();
             builder.Services.AddHttpContextAccessor();
 
+            
 
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -34,6 +36,17 @@ namespace Bloger.Ul
                     .RequireAuthenticatedUser()
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            builder.Services.ConfigureApplicationCookie(opts =>
+            {
+                //Cookie settings
+                opts.Cookie.HttpOnly = true;
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                opts.AccessDeniedPath = new PathString("/Login/AccessDenied"); // eriþimin reddedildiði durumda gitmesi gerek yer
+                opts.AccessDeniedPath = new PathString("/Login/AccessDenied/");
+                opts.LoginPath = "/Blog/Index/";
+                opts.SlidingExpiration = true;
             });
 
             var app = builder.Build();
@@ -51,6 +64,8 @@ namespace Bloger.Ul
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

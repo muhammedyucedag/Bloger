@@ -45,5 +45,12 @@ namespace Bloger.Ul.Controllers
 	        }
 	        return View();
         }
-	}
+
+        [HttpGet]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Blog");
+        }
+    }
 }

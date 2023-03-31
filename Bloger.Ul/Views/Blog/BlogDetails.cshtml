@@ -1,9 +1,21 @@
 ﻿@model Blog
-@{
-    ViewData["Title"] = "BlogDetails";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+@inject SignInManager<User> signInManager
+@inject UserManager<User> UserManager
 
+
+@if (signInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+else
+{
+
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    
+
+}
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
 
