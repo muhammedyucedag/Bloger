@@ -2,6 +2,7 @@
 using Bloger.DataAccess.Concrete;
 using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
@@ -11,10 +12,12 @@ namespace Bloger.Ul.Controllers
     {
         CommentManager commentManager = new CommentManager(new EfCommentRepository());
         private readonly IHttpContextAccessor _httpContext;
+        private  readonly SignInManager<User> _signInManager;
 
-        public CommentController(IHttpContextAccessor httpContext)
+        public CommentController(IHttpContextAccessor httpContext, SignInManager<User> signInManager)
         {
             _httpContext = httpContext;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -25,12 +28,12 @@ namespace Bloger.Ul.Controllers
         [HttpPost]
         public string PartialAddComment(Comment comment)
         {
-            string message = "";
+            string? message = "";
             var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
-            if (userId < 1)
+            if (userId == 0)
             {
-                message = "Kullanıcı hatası";
+                message = "K";
             }
             else
             {
