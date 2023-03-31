@@ -1,5 +1,7 @@
 using Bloger.DataAccess.Concrete;
 using Bloger.Entity.Concrete;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Bloger.Ul
 {
@@ -25,7 +27,16 @@ namespace Bloger.Ul
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddSession();
 
-			var app = builder.Build();
+            // proje seviyesinde authorize iþlemi
+            builder.Services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            var app = builder.Build();
 
 
             // Configure the HTTP request pipeline.
