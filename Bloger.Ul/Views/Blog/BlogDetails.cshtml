@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Blog>
+﻿@model Blog
 @{
     ViewData["Title"] = "BlogDetails";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -10,38 +10,34 @@
         <div class="row g-5">
 
             <div class="col-lg-8">
-                @foreach (var item in Model)
-                {
                     <article class="blog-details">
 
                         <div class="post-img">
                             <img src="https://picsum.photos/750/450?random" alt="" class="img-fluid">
                         </div>
 
-                        <h2 class="title">@item.BlogTitle</h2>
+                        <h2 class="title">@Model.BlogTitle</h2>
 
                         <div class="meta-top">
                             <ul>
-                                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a>@item.UserId</a></li>
-                                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a><time datetime="2020-01-01">@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time></a></li>
-                                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a>12 yorum </a></li>
+                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a>@Model.User.UserName</a></li>
+                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a><time datetime="2020-01-01">@(((DateTime)Model.BlogCreateDate).ToString("dd-MM-yyyy"))</time></a></li>
+                                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a>@Model.Comments.Count() yorum</a></li>
                             </ul>
                         </div><!-- End meta top -->
 
                         <div class="content">
                             <p>
-                                @item.BlogContent
+                            @Model.BlogContent
                             </p>
                             <blockquote>
                                 <p>
-                                    @item.BlogTitle
+                                @Model.BlogTitle
                                 </p>
                             </blockquote>
                         </div><!-- End post content -->
                     </article>
-
-                    <!-- End blog post -->
-                }
+                    
 
                 <div class="post-author d-flex align-items-center">
                     <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
@@ -83,28 +79,9 @@
 
                     @await Component.InvokeAsync("CategoryList")
 
-                    <div class="sidebar-item recent-posts">
-                        <h3 class="sidebar-title">Yazarın Diğer Yazıları</h3>
+                    @await Component.InvokeAsync("WriterLastBlog")
 
-                        <div class="mt-3">
 
-                            <div class="post-item mt-3">
-                                <img src="https://picsum.photos/850/650?random" alt="">
-                                <div>
-                                    <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <img src="https://picsum.photos/850/650?random" alt="">
-                                <div>
-                                    <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
-                                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>

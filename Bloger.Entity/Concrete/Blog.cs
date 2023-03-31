@@ -21,8 +21,7 @@ namespace Bloger.Entity.Concrete
         public virtual Category Category { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
-
-        public virtual List<Comment> Comments { get; set; } // Blogların birden fazla yorumu varıdr.
+        public List<Comment> Comments { get; set; }
 
 
     }

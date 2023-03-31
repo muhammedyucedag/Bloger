@@ -18,9 +18,9 @@ namespace Bloger.DataAccess.Concrete
         }
 
         // Entityde bulunan classlarımı setleme işlemi yaptım
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Blog> Blog { get; set; }
 
 
         // veritabanımızı configure ediyoruz.

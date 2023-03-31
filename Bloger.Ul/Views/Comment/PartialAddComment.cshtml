@@ -1,28 +1,57 @@
-﻿<div class="reply-form">
+﻿
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+@{
+    int id = ViewBag.BlogId;
+}
+
+<div class="reply-form">
 
     <h4>Bir yorum bırakın</h4>
     <p>E-posta hesabınız yayımlanmayacak.</p>
-    <form action="">
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <input name="name" type="text" class="form-control" placeholder="Your Name*">
-            </div>
-            <div class="col-md-6 form-group">
-                <input name="email" type="text" class="form-control" placeholder="Your Email*">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col form-group">
-                <input name="website" type="text" class="form-control" placeholder="Your Website">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col form-group">
-                <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Yorumu Paylaş</button>
 
-    </form>
-
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <input id="CommentUserName" name="CommentUserName" type="text" class="form-control" placeholder="Adınız Soyadınız">
+        </div>
+        <div class="col-md-6 form-group">
+            <input id="CommentTitle" name="CommentTitle" type="text" class="form-control" placeholder="Konu">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col form-group">
+            <textarea id="CommentContent" name="CommentContent" class="form-control" placeholder="Mesajınız"></textarea>
+        </div>
+    </div>
+    <button type="button" onclick="sendComment(@id);" class="btn btn-primary">Yorum Yap</button>
 </div>
+
+<script>
+    function sendComment(id) {
+        var commentUserName = $("#CommentUserName").val();
+        var commentTitle = $("#CommentTitle").val();
+        var commenContent = $("#CommentContent").val();
+        var blogId = id;
+        $.ajax({
+            method: "post",
+            url: "/Comment/PartialAddComment/",
+            data: {
+                CommentUserName: commentUserName,
+                CommentTitle: commentTitle,
+                CommentContent: commenContent,
+                BlogId: blogId
+            }
+        }).done(function (result) {
+            if (result == "") {
+                alert("Yorumunuz başarılı bir şekilde eklendi");
+            }
+            else if (result == "Kullanıcı hatası")
+                alert("Yorum Yapabilmek için kullanıcı girişi sağlayın");
+            location.reload();
+        }).fail(function (result) {
+            if(result == "hata")
+                alert("Yorumunuz eklenmedi. Bir hata oluştu");
+        })
+    }
+</script>
