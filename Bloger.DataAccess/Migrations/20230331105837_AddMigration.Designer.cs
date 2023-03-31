@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloger.DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230329105255_bloger_new_migration")]
-    partial class bloger_new_migration
+    [Migration("20230331105837_AddMigration")]
+    partial class AddMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace Bloger.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("Bloger.Entity.Concrete.Category", b =>
@@ -85,7 +85,7 @@ namespace Bloger.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Bloger.Entity.Concrete.Comment", b =>
@@ -97,9 +97,6 @@ namespace Bloger.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
 
                     b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BlogScore")
                         .HasColumnType("int");
 
                     b.Property<string>("CommentContent")
@@ -120,7 +117,7 @@ namespace Bloger.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("CommentId");
@@ -129,7 +126,7 @@ namespace Bloger.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Bloger.Entity.Concrete.Role", b =>
@@ -367,11 +364,15 @@ namespace Bloger.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bloger.Entity.Concrete.User", null)
+                    b.HasOne("Bloger.Entity.Concrete.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Blog");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

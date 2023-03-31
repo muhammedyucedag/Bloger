@@ -17,7 +17,7 @@ namespace Bloger.DataAccess.EntityFramework
         {
             using (var context = new Context())
             {
-                return context.Blogs.Include(x=>x.Category).ToList();
+                return context.Blog.Include(x=>x.Category).ToList();
             }
         }
 
@@ -26,8 +26,17 @@ namespace Bloger.DataAccess.EntityFramework
             // user id göre blogları çekiyoruz ama çekerken categori ve userin bilgilerini inculde ediyoruz
             using (var context = new Context())
             {
-                return context.Blogs.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id).ToList();
+                return context.Blog.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id).ToList();
+            }
+        }
 
+        public Blog GetBlogById(int id)
+        {
+            //çektiğim blog blogid göre gelecek bunu çekerken içerisindeki user ve category dolu gelecek.
+            using (var context = new Context())
+            {
+                return context.Blog.Include(x =>x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id);
+                
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Bloger.DataAccess.EntityFramework
         {
             using (var context = new Context())
             {
-                return context.Comments.Include(x=>x.Blog).ToList();
+                return context.Comment.Include(x=>x.Blog).ToList();
             }
         }
     }

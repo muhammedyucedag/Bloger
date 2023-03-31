@@ -1,5 +1,6 @@
 ﻿using Bloger.Business.Concrete;
 using Bloger.DataAccess.EntityFramework;
+using Bloger.Entity.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bloger.Ul.Controllers

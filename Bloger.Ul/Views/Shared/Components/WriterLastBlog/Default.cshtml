@@ -1,0 +1,17 @@
+﻿@model List<Blog>
+<h3 class="sidebar-title">Yazarın Diğer Yazıları</h3>
+
+    <div class="sidebar-item recent-posts">
+        <div class="mt-3">
+        @foreach (Blog blog in Model)
+        {
+            <div class="post-item mt-3">
+                <img src="https://picsum.photos/720/550?random=@blog.BlogId" alt="">
+                <div>
+                    <h4><a href="blog-details.html">@blog.BlogTitle</a></h4>
+                    <time>@(((DateTime)blog.BlogCreateDate).ToString("dd-MM-yyyy"))</time>
+                </div>
+            </div><!-- End recent post item-->
+        }
+        </div>
+    </div>

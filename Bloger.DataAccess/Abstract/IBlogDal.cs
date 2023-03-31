@@ -16,5 +16,8 @@ namespace Bloger.DataAccess.Abstract
 
         // kullanıcıya göre katagori listeleme
         List<Blog> GetListWithCategoryByUser(int id);
+
+        // BlogId göre categoryi ve user dolu getirme.
+        Blog GetBlogById(int id);
     }
 }
