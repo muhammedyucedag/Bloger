@@ -2,11 +2,13 @@
 using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
 using Bloger.Ul.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bloger.Ul.Controllers
 {
+    [AllowAnonymous] // tanımlamış olduğum tüm kurallardan muaf ol
     public class LoginController : Controller
     {
         private readonly SignInManager<User> _signInManager;
