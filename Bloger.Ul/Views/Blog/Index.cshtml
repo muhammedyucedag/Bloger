@@ -1,8 +1,23 @@
 ﻿@model List<Blog>
 
-@{
+@*@inject SignInManager<IdentityUser> SignInManager
+*@
+@inject SignInManager<User> signInManager
+@inject UserManager<User> UserManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+else
+{
+
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    
+
 }
 
 <link href="~/css/site.css" rel="stylesheet" />
@@ -33,12 +48,12 @@
                                 if (item.BlogContent.Length < 130)
                                 {
                                     @item.BlogContent
-                                    
+
                                 }
                                 else
                                 {
                                     @item.BlogContent.Substring(0,130)
-                                    
+
                                 }
                             }...
 

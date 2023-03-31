@@ -17,6 +17,7 @@ namespace Bloger.Ul.Controllers
             return View(values);
         }
 
+        [AllowAnonymous]
         public IActionResult BlogDetails(int id)
         {
             ViewBag.BlogId = id;
