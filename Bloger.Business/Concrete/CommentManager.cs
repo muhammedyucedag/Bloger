@@ -5,27 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloger.Business.Abstract;
 using Bloger.DataAccess.Abstract;
+using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
 
 namespace Bloger.Business.Concrete
 {
     public class CommentManager:ICommentService
     {
-        private ICommentDal _commentDal;
+        private EfCommentRepository _commentRepository;
 
-        public CommentManager(ICommentDal commentDal)
+        public CommentManager(EfCommentRepository commentRepository)
         {
-            _commentDal = commentDal;
+            _commentRepository = commentRepository;
         }
 
         public void CommentAdd(Comment comment)
         {
-            _commentDal.Insert(comment);
+            _commentRepository.Insert(comment);
         }
 
         public List<Comment> GetList(int id)
         {
-           return _commentDal.GetListAll(x => x.BlogId == id);
+           return _commentRepository.GetListAll(x => x.BlogId == id);
         }
     }
 }

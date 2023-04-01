@@ -10,7 +10,7 @@ using Bloger.DataAccess.Repositories;
 
 namespace Bloger.DataAccess.EntityFramework
 {
-	public class EfUserRepository : GenericRepository<User>,IUserDal
+	public class EfUserRepository : GenericRepository<User>
 	{
 		public User GetUserByUsername(string username)
 		{

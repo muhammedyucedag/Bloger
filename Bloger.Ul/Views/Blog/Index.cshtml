@@ -1,12 +1,11 @@
-﻿@model List<Blog>
+﻿@model HomePageModel
 
 @*@inject SignInManager<IdentityUser> SignInManager
 *@
 @inject SignInManager<User> signInManager
-@inject UserManager<User> UserManager
 
 
-@if (signInManager.IsSignedIn(User))
+@if(signInManager.IsSignedIn(User))
 {
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
@@ -16,73 +15,62 @@ else
 
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    
+
 
 }
 
+<!-- ======= Portfolio Section ======= -->
+<section id="portfolio" class="portfolio sections-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>Portfolio</h2>
+            <p>Quam sed id excepturi ccusantium dolorem ut quis dolores nisi llum nostrum enim velit qui ut et autem uia reprehenderit sunt deleniti</p>
+        </div>
+
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
+
+            <div>
+                <ul class="portfolio-flters">
+                    <li data-filter="*" class="filter-active">All</li>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li data-filter=".filter-@category.CategoryName"> @category.CategoryName </li>
+                    }
+                </ul><!-- End Portfolio Filters -->
+            </div>
+
+            <div class="row gy-4 portfolio-container">
+                @foreach (var item in Model.Blogs)
+                {
+                    <div class="col-xl-4 col-md-6 portfolio-item filter-@item.Category.CategoryName">
+                        <div class="portfolio-wrap">
+                            <a><img src="https://picsum.photos/450/250?random=@item.BlogId" class="img-fluid" alt=""></a>
+                            <div class="portfolio-info">
+                                <h4><a href="portfolio-details.html" title="More Details">@item.BlogTitle</a></h4>
+                                <p>
+                                    @{
+                                        if (item.BlogContent.Length < 130)
+                                        {
+                                            @item.BlogContent
+
+                                        }
+                                        else
+                                        {
+                                            @item.BlogContent.Substring(0,130)
+
+                                        }
+                                    }...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
 
 <link href="~/css/site.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
-
-<section id="blog" class="blog">
-    <div class="container" data-aos="fade-up">
-
-        <div class="row gy-4 posts-list">
-            @foreach (var item in Model)
-            {
-                <div class="col-xl-4 col-md-6">
-
-                    <article>
-
-                        <div class="post-img">
-                            <img src="https://picsum.photos/450/250?random=@item.BlogId" alt="" class="img-fluid">
-                        </div>
-                        <p class="post-category">@item.Category.CategoryName</p>
-                        <h2 class="title">
-                            <a href="/Blog/BlogDetails/@item.BlogId">@item.BlogTitle</a>
-                        </h2>
-
-                        @*blog yazıların karakter sayısında göre ayarlandı*@
-                        <p class="card-text mb-3">
-                            @{
-                                if (item.BlogContent.Length < 130)
-                                {
-                                    @item.BlogContent
-
-                                }
-                                else
-                                {
-                                    @item.BlogContent.Substring(0,130)
-
-                                }
-                            }...
-
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <div class="post-meta">
-                                @*<p class="post-author-list">@item.User.UserName</p>*@
-                                <p class="post-date">
-
-                                    <time datetime="2022-01-01">@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time>
-
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            }
-        </div>
-
-        <div class="blog-pagination">
-            <ul class="justify-content-center">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-            </ul>
-        </div>
-
-
-    </div>
-</section>
-

@@ -3,26 +3,98 @@ using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Configuration;
+using System.Reflection.Metadata;
+using Bloger.Business.ValidationRules;
+using Bloger.Ul.Models;
+using FluentValidation.Results;
 
 namespace Bloger.Ul.Controllers
 {
     public class BlogController : Controller
     {
         private BlogManager blogManager = new BlogManager(new EfBlogRepository());
+        CategoryManager categoryManager = new CategoryManager(new EfCategoryRepository());
+        private readonly IHttpContextAccessor _httpContext;
+
+
+        public BlogController(IHttpContextAccessor httpContext)
+        {
+            _httpContext = httpContext;
+        }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var values = blogManager.GetBlogListWithCategory();
-            return View(values);
+            HomePageModel model = new HomePageModel();
+            var blogs = blogManager.GetBlogListWithCategory();
+            var categories = categoryManager.GetCategoriesForHomePage();
+            model.Blogs = blogs;
+            model.Categories = categories;
+            return View(model);
         }
 
         [AllowAnonymous]
+        [Route("blogdetails/{id}" )] // slug yapısı
         public IActionResult BlogDetails(int id)
         {
             ViewBag.BlogId = id;
             var values = blogManager.GetBlogById(id);
             return View(values);
+        }
+
+        public async Task<IActionResult> BlogListByWriter()
+        {
+            // userin id sini tutan bir sesion değer set işlemini login controller de aldık
+            // eğer session verisi boş gelire sıfır ataması yap
+
+            var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
+            var userblogs = blogManager.GetListWithCategoryByUserBm(userId);
+
+            return View(userblogs);
+        }
+
+        [HttpGet]
+        public IActionResult BlogAdd()
+        {
+            List<SelectListItem> categoryvalues = (from x in
+                    categoryManager.GetList()
+                select new SelectListItem
+                {
+                    Text = x.CategoryName,
+                    Value = x.CategoryId.ToString()
+                }).ToList();
+            ViewBag.CategoryValues = categoryvalues;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult BlogAdd(Blog blog)
+        {
+            BlogValidator blogValidator = new BlogValidator();
+            ValidationResult results = blogValidator.Validate(blog);
+
+            if (results.IsValid)
+            {
+                var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
+
+                blog.BlogStatus = true;
+                blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                blog.UserId = userId;
+                blogManager.Add(blog);
+
+                return RedirectToAction("BlogListByWriter", "Blog");
+
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
     }
 }

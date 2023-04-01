@@ -5,42 +5,49 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloger.Business.Abstract;
 using Bloger.DataAccess.Abstract;
+using Bloger.DataAccess.Concrete;
+using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
 
 namespace Bloger.Business.Concrete
 {
     public class CategoryManager:ICategoryService
     {
-        private ICategoryDal _categoryDal;
+        private EfCategoryRepository _categoryRepository;
 
-        public CategoryManager(ICategoryDal categoryDal)
+        public CategoryManager(EfCategoryRepository categoryRepository)
         {
-            _categoryDal = categoryDal;
+            _categoryRepository = categoryRepository;
         }
 
         public void Add(Category item)
         {
-            _categoryDal.Insert(item);
+            _categoryRepository.Insert(item);
         }
 
         public void Delete(Category item)
         {
-            _categoryDal.Delete(item);
+            _categoryRepository.Delete(item);
         }
 
         public void Update(Category item)
         {
-            _categoryDal.Update(item);
+            _categoryRepository.Update(item);
         }
 
         public List<Category> GetList()
         {
-            return _categoryDal.GetListAll();
+            return _categoryRepository.GetListAll();
         }
 
         public Category TGetById(int id)
         {
-            return _categoryDal.GetById(id);
+            return _categoryRepository.GetById(id);
+        }
+
+        public List<Category> GetCategoriesForHomePage()
+        {
+            return _categoryRepository.GetCategoriesForHomePage();
         }
     }
 }

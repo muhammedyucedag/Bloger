@@ -9,5 +9,6 @@ namespace Bloger.Business.Abstract
 {
     public interface ICategoryService:IGenericService<Category>
     {
+        List<Category> GetCategoriesForHomePage();
     }
 }
