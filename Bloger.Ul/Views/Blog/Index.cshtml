@@ -5,7 +5,7 @@
 @inject SignInManager<User> signInManager
 
 
-@if(signInManager.IsSignedIn(User))
+@if (signInManager.IsSignedIn(User))
 {
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
@@ -24,8 +24,8 @@ else
     <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-            <h2>Portfolio</h2>
-            <p>Quam sed id excepturi ccusantium dolorem ut quis dolores nisi llum nostrum enim velit qui ut et autem uia reprehenderit sunt deleniti</p>
+            <h2>LastBlog</h2>
+            <h6>Dünya Hakkında Her Şey: Keşfedin ve Öğrenin.</h6>
         </div>
 
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
@@ -47,7 +47,7 @@ else
                         <div class="portfolio-wrap">
                             <a><img src="https://picsum.photos/450/250?random=@item.BlogId" class="img-fluid" alt=""></a>
                             <div class="portfolio-info">
-                                <h4><a href="portfolio-details.html" title="More Details">@item.BlogTitle</a></h4>
+                                <h4><a href="/blogdetails/@item.BlogId" title="More Details">@item.BlogTitle</a></h4>
                                 <p>
                                     @{
                                         if (item.BlogContent.Length < 130)
@@ -62,6 +62,14 @@ else
                                         }
                                     }...
                                 </p>
+                                <br />
+                                <p class="post-date">
+                                    <i class="bi bi-person"></i> <time>@item.User.UserName</time>
+                                </p>
+                                <p class="post-date">
+                                    <i class="bi bi-clock"></i> <time>@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time>
+                                </p>
+
                             </div>
                         </div>
                     </div>

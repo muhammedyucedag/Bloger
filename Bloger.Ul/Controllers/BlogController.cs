@@ -57,7 +57,7 @@ namespace Bloger.Ul.Controllers
 
         [HttpGet]
         public IActionResult BlogAdd()
-        {
+        {   
             List<SelectListItem> categoryvalues = (from x in
                     categoryManager.GetList()
                 select new SelectListItem
@@ -68,12 +68,12 @@ namespace Bloger.Ul.Controllers
             ViewBag.CategoryValues = categoryvalues;
             return View();
         }
-
+         
         [HttpPost]
         public IActionResult BlogAdd(Blog blog)
         {
-            BlogValidator blogValidator = new BlogValidator();
-            ValidationResult results = blogValidator.Validate(blog);
+            BlogValidator validationRules = new BlogValidator();
+            ValidationResult results = validationRules.Validate(blog);
 
             if (results.IsValid)
             {
@@ -87,12 +87,10 @@ namespace Bloger.Ul.Controllers
                 return RedirectToAction("BlogListByWriter", "Blog");
 
             }
-            else
+
+            foreach (var item in results.Errors)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
+                ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
             }
             return View();
         }

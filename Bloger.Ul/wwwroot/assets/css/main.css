@@ -35,6 +35,8 @@
 body {
   font-family: var(--font-default);
   color: var(--color-default);
+
+
 }
 
 a {
@@ -60,13 +62,10 @@ h6 {
 # Sections & Section Header
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 30px 0;
   overflow: hidden;
 }
 
-.sections-bg {
-  background-color: #f6f6f6;
-}
 
 .section-header {
   text-align: center;
@@ -74,7 +73,7 @@ section {
 }
 
 .section-header h2 {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 600;
   margin-bottom: 20px;
   padding-bottom: 20px;
@@ -103,10 +102,10 @@ section {
 # Breadcrumbs
 --------------------------------------------------------------*/
 .breadcrumbs .page-header {
-  padding: 60px 0 60px 0;
-  min-height: 20vh;
-  position: relative;
-  background-color: var(--color-primary);
+    padding: 30px 0 60px 0;
+    min-height: 20vh;
+    position: relative;
+    background-color: #316464;
 }
 
 .breadcrumbs .page-header h2 {
@@ -142,7 +141,7 @@ section {
 }
 
 .breadcrumbs nav ol a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .breadcrumbs nav ol li+li {
@@ -238,12 +237,12 @@ section {
 # Header
 --------------------------------------------------------------*/
 .topbar {
-  background: #00796b;
-  height: 40px;
-  font-size: 14px;
-  transition: all 0.5s;
-  color: #fff;
-  padding: 0;
+    background: #EB5F42;
+    height: 40px;
+    font-size: 14px;
+    transition: all 0.5s;
+    color: #fff;
+    padding: 0;
 }
 
 .topbar .contact-info i {
@@ -273,7 +272,7 @@ section {
 
 .topbar .contact-info i a:hover {
   color: #fff;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .topbar .social-links a {
@@ -288,10 +287,10 @@ section {
 }
 
 .header {
-  transition: all 0.5s;
-  z-index: 997;
-  height: 90px;
-  background-color: var(--color-primary);
+    transition: all 0.5s;
+    z-index: 997;
+    height: 90px;
+    background-color: #316464 /*var(--color-primary)*/;
 }
 
 .header.sticked {
@@ -1110,10 +1109,11 @@ section {
 # Portfolio Section
 --------------------------------------------------------------*/
 .portfolio .portfolio-flters {
-  padding: 0 0 20px 0;
-  margin: 0 auto;
-  list-style: none;
-  text-align: center;
+    padding: 10px 0 10px 0;
+    list-style: none;
+    text-align: center;
+    background-color: #f6f6f6;
+    border-radius: 10px;
 }
 
 .portfolio .portfolio-flters li {
@@ -2557,10 +2557,10 @@ section {
 # Footer
 --------------------------------------------------------------*/
 .footer {
-  font-size: 14px;
-  background-color: var(--color-primary);
-  padding: 50px 0;
-  color: white;
+    font-size: 14px;
+    background-color: #316464;
+    padding: 50px 0;
+    color: white;
 }
 
 .footer .footer-info .logo {
