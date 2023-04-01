@@ -5,57 +5,63 @@ using System.Text;
 using System.Threading.Tasks;
 using Bloger.Business.Abstract;
 using Bloger.DataAccess.Abstract;
+using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
 
 namespace Bloger.Business.Concrete
 {
     public class BlogManager : IBlogService
     {
-        IBlogDal _blogDal;
+        private EfBlogRepository _blogRepository = new EfBlogRepository();
 
-        public BlogManager(IBlogDal blogDal)
+        public BlogManager(EfBlogRepository blogRepository)
         {
-            _blogDal = blogDal;
+            _blogRepository = blogRepository;
         }
 
         public void Add(Blog item)
         {
-            _blogDal.Insert(item);
+            _blogRepository.Insert(item);
         }
 
         public void Delete(Blog item)
         {
-            _blogDal.Delete(item);
+            _blogRepository.Delete(item);
         }
 
         public void Update(Blog item)
         {
-            _blogDal.Update(item);
+            _blogRepository.Update(item);
         }
 
         public List<Blog> GetList()
         {
-            return _blogDal.GetListAll();
+            return _blogRepository.GetListAll();
         }
 
         public Blog TGetById(int id)
         {
-            return _blogDal.GetById(id);
+            return _blogRepository.GetById(id);
         }
 
         public List<Blog> GetBlogListWithCategory()
         {
-            return _blogDal.GetListWithCategory();
+            return _blogRepository.GetListWithCategory();
+        }
+
+        public List<Blog> GetListWithCategoryByUserBm(int id)
+        {
+            return _blogRepository.GetListWithCategoryByUser(id);
         }
 
         public List<Blog> GetBlogListByUser(int id)
         {
-            return _blogDal.GetListAll(x => x.User.Id == id).ToList();
+            return _blogRepository.GetListAll(x => x.User.Id == id).ToList();
         }
 
         public Blog GetBlogById(int id)
         {
-            return _blogDal.GetBlogById( id);
+            return _blogRepository.GetBlogById( id);
         }
     }
 }

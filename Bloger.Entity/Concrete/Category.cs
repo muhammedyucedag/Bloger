@@ -20,6 +20,7 @@ namespace Bloger.Entity.Concrete
         [Required(ErrorMessage = "Kategori Açıklamasını Boş geçemezsiniz")]
         public string CategoryDescription { get; set; }
         public bool CategoryStatus { get; set; }
+        public int Order { get; set; }
 
         public virtual List<Blog> Blogs { get; set; } // kategorinin birden fazla notları varıdr.
 

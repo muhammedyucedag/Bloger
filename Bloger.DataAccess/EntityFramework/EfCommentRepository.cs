@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.DataAccess.EntityFramework
 {
-    public class EfCommentRepository : GenericRepository<Comment>,ICommentDal
+    public class EfCommentRepository : GenericRepository<Comment>
     {
         public List<Comment> GetListWithBlog()
         {

@@ -1,0 +1,41 @@
+﻿@model Blog
+@inject SignInManager<User> signInManager
+@inject UserManager<User> UserManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "BlogAdd";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+else
+{
+
+    ViewData["Title"] = "BlogAdd";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+
+}
+
+<h1>Yeni Blog Girişi</h1>
+
+@using (Html.BeginForm("BlogAdd", "Blog", FormMethod.Post))
+{
+    @Html.Label("Blog Başlığı")
+    @Html.TextBoxFor(x=>x.BlogTitle,new{@class="form-control"})
+    @Html.ValidationMessageFor(x=>x.BlogTitle)
+    <br />
+    @Html.Label("Blog Görseli")
+    @Html.TextBoxFor(x=>x.BlogImage,new{@class="form-control"})
+    @Html.ValidationMessageFor(x=>x.BlogImage)
+    <br />
+    @Html.Label("Kategori")
+    @Html.DropDownListFor(x=>x.CategoryId,(List<SelectListItem>)ViewBag.CategoryValues,new{@class="form-control"})
+    <br />
+    @Html.Label("Blog İçeriği")
+    @Html.TextAreaFor(x=>x.BlogContent,15,3, new{@class="form-control"})
+    @Html.ValidationMessageFor(x=>x.BlogContent)
+    <br />
+    <button class="btn btn-primary">Yazıyı Kaydet</button>
+}
+

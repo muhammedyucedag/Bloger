@@ -11,13 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.DataAccess.EntityFramework
 {
-    public class EfBlogRepository:GenericRepository<Blog>,IBlogDal
+    public class EfBlogRepository:GenericRepository<Blog>
     {
         public List<Blog> GetListWithCategory()
         {
             using (var context = new Context())
             {
-                return context.Blog.Include(x=>x.Category).ToList();
+                return context.Blog.Include(x=>x.User).Include(x=>x.Category).ToList();
             }
         }
 
