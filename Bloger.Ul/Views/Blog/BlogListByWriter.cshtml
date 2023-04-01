@@ -1,6 +1,6 @@
-﻿
+﻿@model List<Blog>
+
 @inject SignInManager<User> signInManager
-@inject UserManager<User> UserManager
 
 
 @if (signInManager.IsSignedIn(User))
@@ -13,63 +13,79 @@ else
 
     ViewData["Title"] = "BlogListByWriter";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    
+
 
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-<table class="table table-bordered">
-    <tr>
-        <th>#</th>
-        <th>Blog Başlığı</th>
-        <th>Oluşturma Tarihi</th>
-        <th>Kategori</th>
-        <th>Durum</th>
-        <th>Sil</th>
-        <th>Düzenle</th>
 
-    </tr>
 
-    @foreach (var item in Model)
-    {
-            <tr>
-                <th>@item.BlogId</th>
-                <td>@item.BlogTitle</td>
-                <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</td>
-                <td>@item.Category.CategoryName</td>
-                <td>
-                @if (item.BlogStatus)
-                {
-                            <a class="text-success">Aktif</a>
-                }
-                else
-                {
-                            <a class="text-danger">Pasif</a>
-                }
-                </td>
-            @* <td>
-                @if (item.BlogStatus)
-                {
-                    <span class="badge badge-success">Aktif</span>
-                }
-                else
-                {
-                    <span class="badge badge-secondary">Pasif</span>
-                }
-            </td>*@
-                <td>
-                    <button data-delete="@item.BlogId" title="Sil" class="btn btn-danger btn-sm">
-                        <i class="bi-trash text-dark"></i>
-                    </button>
-                </td>
-                <td><a href="/blog/editblog/@item.BlogId" editbtn title="Düzenle" class="btn btn-warning btn-sm"><i class="bi-pencil-square text-dark"></i></a></td>
-            </tr>
+<section id="portfolio" class="portfolio sections-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
 
-    }
-</table>
+            <div class="row gy-4 portfolio-container">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xl-4 col-md-6 portfolio-item filter-@item.Category.CategoryName">
+                        <div class="portfolio-wrap">
+
+                            <a>
+                                <img src="https://picsum.photos/450/250?random=@item.BlogId" class="img-fluid" alt="">
+                            </a>
+
+                            <div class="portfolio-info">
+                                <h4><a style="text-decoration: none" href="/blogdetails/@item.BlogId" title="More Details">@item.BlogTitle</a></h4>
+                                <p>
+                                    @{
+                                        if (item.BlogContent.Length < 130)
+                                        {
+                                            @item.BlogContent
+
+                                        }
+                                        else
+                                        {
+                                            @item.BlogContent.Substring(0,130)
+
+                                        }
+                                    }...
+                                </p>
+                                <br />
+                                <p class="post-date">
+                                    <i class="bi bi-person"></i> <time>@item.User.UserName</time>
+                                </p>
+                                <p class="post-date">
+                                    <i class="bi bi-clock"></i> <time>@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time>
+                                </p>
+                            </div>
+
+                            <div class="dropdown" style="left: 76%">
+                                <button style="background-color: #316464; color: whitesmoke" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    İşlemler
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button data-delete="@item.BlogId" title="Sil" class="dropdown-item" href="#"><i class="bi-trash text-dark"></i> - Blog Sil</button>
+                                    </li>
+                                    <li>
+                                        <a href="/blog/editblog/@item.BlogId" editbtn title="Düzenle" class="dropdown-item"><i class="bi-pencil-square text-dark"></i> - Blog Düzenle</a>
+                                    </li>
+                                    <li>
+                                        <a href="/blog/blogadd" class="dropdown-item"><i class="bi bi-plus-circle text-dark"></i> - Blog Oluştur</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
 <script>
     $(document).ready(function () {
 
@@ -111,5 +127,5 @@ else
 
     })
 </script>
-<a href="/blog/blogadd" class="btn btn-success ms-3">Yeni Blog Oluştur</a>
+
 

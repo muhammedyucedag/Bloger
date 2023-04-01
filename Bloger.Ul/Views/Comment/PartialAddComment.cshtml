@@ -48,6 +48,8 @@
             }
             else if (result == "K")
                 alert("Yorum Yapabilmek için kullanıcı girişi sağlayın");
+            else
+                alert("Yorumunuz eklenmedi. Bir hata oluştu")
             location.reload();
         }).fail(function (result) {
             if(result == "hata")

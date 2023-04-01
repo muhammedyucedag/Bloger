@@ -2,6 +2,7 @@
 using Bloger.DataAccess.Concrete;
 using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
@@ -25,6 +26,7 @@ namespace Bloger.Ul.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public string PartialAddComment(Comment comment)
         {
