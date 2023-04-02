@@ -1,0 +1,53 @@
+﻿@model Blog
+
+@inject SignInManager<User> signInManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+else
+{
+
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+
+}
+<form asp-action="EditBlog" asp-controller="Blog" enctype="multipart/form-data">
+    <div class="form-group row blogedit">
+        <div class="col-10">
+            @Html.HiddenFor(x => x.BlogId, new { @class = "form-control" })
+            <br />
+            @Html.Label("Blog Başlığı")
+            @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
+            <br />  
+           @* @Html.Label("Blog Görsel")
+            @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+            <br />*@
+            @Html.Label("Blog Kategori")
+            @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.CategoryValues, new { @class = "form-control" })
+            <br />
+            @Html.Label("Blog İçerği")
+            @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control" })
+            <br />
+            <div class="form-group">
+                <label>Görsel Seçin:</label>
+                <input type="file" name="file" id="file" class="upload-default">
+            </div>
+            <button type="submit" class="btn btn-default">Yükle</button>
+            <button class="btn btn-success btn-sm ms-2">Güncelle</button>
+            <td><a href="/Blog/BlogListByWriter/" title="Düzenle" class="btn btn-secondary btn-sm">Listeye Dön</a></td>
+        </div>
+
+    </div>
+</form>
+
+<style>
+    .blogedit {
+        margin-left: 15%
+    }
+</style>
+

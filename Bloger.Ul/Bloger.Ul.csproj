@@ -31,4 +31,8 @@
     <ProjectReference Include="..\Bloger.Business\Bloger.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\BlogIamgeFile\" />
+  </ItemGroup>
+
 </Project>
