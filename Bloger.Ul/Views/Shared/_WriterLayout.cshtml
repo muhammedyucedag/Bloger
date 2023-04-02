@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     li a {
         text-decoration: none;
@@ -36,22 +36,23 @@
             <!-- <img src="assets/img/logo.png" alt=""> -->
             <h1>LastBLOG<span>.</span></h1>
         </a>
-
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="/Blog/Index">Ana Sayfa</a></li>
+                <li><a href="/Blog/Index"><i class="fa fa-house me-2"></i>Ana Sayfa</a></li>
+                
+                <li><a href="#about"><i class="fa fa-medal me-2"></i>Hakkımızda</a></li>
+                <li><a href="#footer"><i class="fa fa-phone me-2"></i>Bağlantı</a></li>
+                
                 <li class="dropdown">
-                    <a href="#"><span>Blog</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul>
-                        <li><a href="/Blog/BlogListByWriter">Blog Listem</a></li>
-                        <li><a href="/Blog/BlogAdd">Yeni Blog Ekle</a></li>
-                        <li><a href="/Blog/BlogListByWriter">Bloglarım</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
-                    </ul>
-                </li>
-                <li><a href="#about">Hakkımızda</a></li>
-                <li><a href="#contact">Bağlantı</a></li>
-                <li><a href="/login/LogOff/">Çıkış Yap</a></li>
+                    <a href="#"><span><i class="fa fa-user me-2"></i>@User.Identity.Name</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="/Blog/BlogListByWriter">Blog Listem</a></li>
+                            <li><a href="/Blog/BlogAdd">Yeni Blog Ekle</a></li>
+                            <li><a href="/Blog/BlogListByWriter">Bloglarım</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                <li><a href="/login/LogOff/"><i class="fa fa-right-from-bracket me-2"></i>Çıkış Yap</a></li>
             </ul>
         </nav><!-- .navbar -->
 
@@ -144,12 +145,11 @@
                         <a href="https://www.linkedin.com/in/muhammed-y%C3%BCceda%C4%9F-187533250/" class="linkedin"><i class="bi bi-linkedin"></i></a>
                     </div>
                 </div>
-
-
+                
                 <div class="col-lg-4 col-md-12 footer-contact text-center text-md-start">
                     <h4>Son Gönderiler</h4>
-@*                    @await Component.InvokeAsync("BlogLast3Post")
-*@
+                    @await Component.InvokeAsync("BlogLast3Post")
+
                 </div>
 
                 <div class="col-lg-4 col-md-12 footer-contact text-center text-md-start">

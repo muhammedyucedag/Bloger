@@ -44,6 +44,11 @@ namespace Bloger.Business.Concrete
             return _blogRepository.GetById(id);
         }
 
+        public List<Blog> GetLast3Blog()
+        {
+            return _blogRepository.GetListAll().TakeLast(3).ToList();
+        }
+
         public List<Blog> GetBlogListWithCategory()
         {
             return _blogRepository.GetListWithCategory();

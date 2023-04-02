@@ -94,5 +94,13 @@ namespace Bloger.Ul.Controllers
             }
             return View();
         }
+
+        public IActionResult DeleteBlog(int id)
+        {
+            var blogvalues = blogManager.TGetById(id);
+            blogManager.Delete(blogvalues);
+
+            return RedirectToAction("BlogListByWriter", "Blog");
+        }
     }
 }

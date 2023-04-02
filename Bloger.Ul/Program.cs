@@ -42,7 +42,7 @@ namespace Bloger.Ul
             {
                 //Cookie settings
                 opts.Cookie.HttpOnly = true;
-                opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 opts.AccessDeniedPath = new PathString("/Login/AccessDenied"); // eriþimin reddedildiði durumda gitmesi gerek yer
                 opts.AccessDeniedPath = new PathString("/Login/AccessDenied/");
                 opts.LoginPath = "/Blog/Index/";
