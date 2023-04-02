@@ -102,5 +102,31 @@ namespace Bloger.Ul.Controllers
 
             return RedirectToAction("BlogListByWriter", "Blog");
         }
+
+        public IActionResult EditBlog(int id)
+        {
+            var blogvalue = blogManager.TGetById(id);
+            List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
+                select new SelectListItem
+                {
+                    Text = x.CategoryName,
+                    Value = x.CategoryId.ToString()
+                }).ToList();
+
+            ViewBag.CategoryValues = categoryValues;
+            return View(blogvalue);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlog(Blog blog)
+        {
+            var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            blog.BlogStatus = true;
+            blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            blog.UserId = userId;
+            blogManager.Update(blog);
+            return RedirectToAction("BlogListByWriter");
+        }
     }
 }

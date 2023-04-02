@@ -22,6 +22,7 @@ namespace Bloger.DataAccess.Concrete
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Blog> Blog { get; set; }
+        public DbSet<Image> Image { get; set; }
 
 
         // veritabanımızı configure ediyoruz.

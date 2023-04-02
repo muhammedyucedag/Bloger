@@ -90,8 +90,8 @@ else
 <script>
     $(document).ready(function () {
 
-        $('[data-delete]').click(function (event) {
-            event.preventDefault(); // Sayfa yenilenmesni engeller
+        $('[data-delete]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
 
             const buttonElement = $(this)
 
@@ -109,10 +109,17 @@ else
                     $.ajax({
                         method: "get",
                         url: '/blog/deleteblog/' + buttonElement.data('delete'),
-                        
 
                     }).done(function (result) {
-                        buttonElement.parent().parent().parent().parent().remove()
+                        buttonElement.parent().parent().parent().parent().parent().remove()
+                        swal({
+                            title: "Silme işlemi başarılı",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
 
                     }).fail(function () {
                         swal({
@@ -122,6 +129,13 @@ else
                         });
 
                     })
+                }
+                else {
+                    swal({
+                        title: "Silme işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
                 }
             })
 
