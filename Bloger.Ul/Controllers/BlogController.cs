@@ -9,6 +9,7 @@ using System.Reflection.Metadata;
 using Bloger.Business.ValidationRules;
 using Bloger.Ul.Models;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 
 namespace Bloger.Ul.Controllers
 {
@@ -67,11 +68,13 @@ namespace Bloger.Ul.Controllers
                 }).ToList();
             ViewBag.CategoryValues = categoryvalues;
             return View();
+
+            
         }
-         
+
         [HttpPost]
-        public IActionResult BlogAdd(Blog blog)
-        {
+        public async Task<IActionResult> BlogAdd(Blog blog,[FromForm]IFormFile[] formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
+            {
             BlogValidator validationRules = new BlogValidator();
             ValidationResult results = validationRules.Validate(blog);
 
@@ -82,11 +85,36 @@ namespace Bloger.Ul.Controllers
                 blog.BlogStatus = true;
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
+
+                if (formFile != null && formFile.Count() > 0)
+                {
+                    var file = formFile[0];
+                    if (file.Length > 0)
+                    {
+                        var fileName = file.FileName;     
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        blog.BlogImage = "/CoverImage/" + fileName;
+                    }
+                }
+
                 blogManager.Add(blog);
 
                 return RedirectToAction("BlogListByWriter", "Blog");
 
             }
+
+            List<SelectListItem> categoryvalues = (from x in
+                   categoryManager.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
+            ViewBag.CategoryValues = categoryvalues;
 
             foreach (var item in results.Errors)
             {
