@@ -1,5 +1,6 @@
 using Bloger.DataAccess.Concrete;
 using Bloger.Entity.Concrete;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -23,10 +24,10 @@ namespace Bloger.Ul
                 }).AddEntityFrameworkStores<Context>();
             builder.Services.AddHttpContextAccessor();
 
-            
+
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
             builder.Services.AddSession();
 
             // proje seviyesinde authorize iþlemi
