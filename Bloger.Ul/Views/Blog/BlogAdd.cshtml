@@ -18,6 +18,7 @@ else
 
 <h1>Yeni Blog Girişi</h1>
 
+@Html.Raw(ViewResultExtension.ViewResult(ViewBag.Result))
 
 <form method="post" asp-action="BlogAdd" asp-controller="Blog" enctype="multipart/form-data">
     @Html.Label("Blog Başlığı")

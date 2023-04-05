@@ -45,9 +45,10 @@ else
                 {
                     <div class="col-xl-4 col-md-6 portfolio-item filter-@item.Category.CategoryName">
                         <div class="portfolio-wrap">
-                            <a><img src="@item.BlogImage" class="img-fluid" alt=""></a>
+                            <a><img src="@item.BlogImage" width="420" height="300" class="img" alt=""></a>
                             <div class="portfolio-info">
-                                <h4><a style="text-decoration:none;" href="/blogdetails/@item.BlogId" title="More Details">@item.BlogTitle</a></h4>
+                                    <p style="text-decoration:none;" href="/blogdetails/@item.BlogId" title="More Details">@item.Category.CategoryName</p>
+                                <h4><a style="text-decoration:none;" href="/blogdetails/@item.BlogId" title="More Details">@item.BlogTitle</a></h4>              
                                 <p>
                                     @{
                                         if (item.BlogContent.Length < 130)
