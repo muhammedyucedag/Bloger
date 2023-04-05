@@ -73,7 +73,7 @@ namespace Bloger.Ul.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlogAdd(Blog blog,[FromForm]IFormFile[] formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
+        public async Task<IActionResult> BlogAdd(Blog blog,IFormFile formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
             {
             BlogValidator validationRules = new BlogValidator();
             ValidationResult results = validationRules.Validate(blog);
@@ -86,9 +86,9 @@ namespace Bloger.Ul.Controllers
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
 
-                if (formFile != null && formFile.Count() > 0)
+                if (formFile != null && formFile.Length > 0)
                 {
-                    var file = formFile[0];
+                    var file = formFile;
                     if (file.Length > 0)
                     {
                         var fileName = file.FileName;     
