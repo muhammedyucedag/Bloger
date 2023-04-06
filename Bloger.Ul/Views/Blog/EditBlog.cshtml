@@ -17,14 +17,17 @@ else
 
 }
 <form asp-action="EditBlog" asp-controller="Blog" enctype="multipart/form-data">
-    <div class="form-group row blogedit">
-        <div class="col-10">
+    <div class="section-header">
+        <h2>Blog Düzenle</h2>
+    </div>
+    <div class="row">
+        <div class="col-5 blogedit">
             @Html.HiddenFor(x => x.BlogId, new { @class = "form-control" })
             <br />
             @Html.Label("Blog Başlığı")
             @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
-            <br />  
-           @* @Html.Label("Blog Görsel")
+            <br />
+            @* @Html.Label("Blog Görsel")
             @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
             <br />*@
             @Html.Label("Blog Kategori")
@@ -33,20 +36,47 @@ else
             @Html.Label("Blog İçerği")
             @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control" })
             <br />
-            <div class="form-group">
-                <label>Görsel Seçin:</label>
-                <input type="file" name="file" id="file" class="upload-default">
+            <div>
+                <label class="form-label">Blog Görseli</label>
+                <input class="form-control" type="file" name="formFile" id="formFile">
+                <span asp-validation-for="BlogImage" class="text-danger"></span>
             </div>
-            <button class="btn btn-success btn-sm ms-2">Güncelle</button>
-            <td><a href="/Blog/BlogListByWriter/" title="Düzenle" class="btn btn-secondary btn-sm">Listeye Dön</a></td>
+            <br />
+            <button class="update"><i class="bi bi-arrow-clockwise me-2"></i>Güncelle</button>
+            <button class="backtolist">
+                <a class="backtolistlink" href="/Blog/BlogListByWriter"><i class="bi bi-arrow-left me-2"></i>Listeye Dön</a>
+            </button>
         </div>
-
+    </div>
+    <div class="col-10">
     </div>
 </form>
 
 <style>
+    .update {
+        background-color: #eb5f42;
+        color: white;
+        border: none;
+        width: 105px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolist {
+        background-color: #316464;
+        color: white;
+        border: none;
+        width: 130px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolistlink {
+        color: white;
+    }
+
     .blogedit {
-        margin-left: 15%
+        margin-left: 29%;
     }
 </style>
 

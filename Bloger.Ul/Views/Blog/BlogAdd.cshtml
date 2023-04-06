@@ -16,31 +16,73 @@ else
 
 }
 
-<h1>Yeni Blog Girişi</h1>
-
-@Html.Raw(ViewResultExtension.ViewResult(ViewBag.Result))
 
 <form method="post" asp-action="BlogAdd" asp-controller="Blog" enctype="multipart/form-data">
-    @Html.Label("Blog Başlığı")
-    @Html.TextBoxFor(x=>x.BlogTitle,new{@class="form-control"})
-    @Html.ValidationMessageFor(x=>x.BlogTitle)
-    <br />
-    @*@Html.Label("Blog Görseli")
-    @Html.TextBoxFor(x=>x.BlogImage,new{@class="form-control"})
-    @Html.ValidationMessageFor(x=>x.BlogImage)
-    <br />*@
-    @Html.Label("Kategori")
-    @Html.DropDownListFor(x=>x.CategoryId,(List<SelectListItem>)ViewBag.CategoryValues,new{@class="form-control"})
-    <br />
-    @Html.Label("Blog İçeriği")
-    @Html.TextAreaFor(x=>x.BlogContent,15,3, new{@class="form-control"})
-    @Html.ValidationMessageFor(x=>x.BlogContent)
-    <br />
-    <input class="form-control" type="file" name="formFile" id="formFile">
-    <span asp-validation-for="BlogImage" class="text-danger"></span>
+    <div class="section-header">
+        <h2>Yeni Blog Girişi Yap</h2>
+    </div>
+    <div class="row">
+        <div class="col-5 blogadd">
+            <div>
+                <label class="form-label">Blog Başlığı</label>
+                @Html.TextBoxFor(x=>x.BlogTitle,new{@class="form-control"})
+                @Html.ValidationMessageFor(x=>x.BlogTitle)
+            </div>
+            <br />
+            <div class="mb-4">
+                <label class="form-label">Kategori Seçiniz</label>
+                @Html.DropDownListFor(x=>x.CategoryId,(List<SelectListItem>)ViewBag.CategoryValues,new{@class="form-control"})
+            </div>
+            <div class="mb-1">
+                <label class="form-label">Blog İçeriği</label>
+                @Html.TextAreaFor(x=>x.BlogContent,15,3, new{@class="form-control"})
+                @Html.ValidationMessageFor(x=>x.BlogContent)
+            </div>
 
-    <button class="btn btn-primary">Yazıyı Kaydet</button>
+            <br />
+            <div>
+                <label class="form-label">Blog Görseli</label>
+                <input class="form-control" type="file" name="formFile" id="formFile">
+                <span asp-validation-for="BlogImage" class="text-danger"></span>
+            </div>
+            <br />
+            <button class="saved"><i class="bi bi-upload me-2"></i>Kaydet</button>
+            <button class="backtolist">
+                <a class="backtolistlink" href="/Blog/BlogListByWriter"><i class="bi bi-arrow-left me-2"></i>Listeye Dön</a>
+            </button>
+        </div>
+    </div>
+
 </form>
+
+<style>
+    .saved {
+        background-color: #eb5f42;
+        color: white;
+        border: none;
+        width: 95px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolist {
+        background-color: #316464;
+        color: white;
+        border: none;
+        width: 120px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolistlink {
+        color: white;
+    }
+
+    .blogadd {
+        margin-left: 29%;
+    }
+
+</style>
 
 
 

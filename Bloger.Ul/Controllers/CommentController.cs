@@ -9,11 +9,12 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 namespace Bloger.Ul.Controllers
 {
+    //[AutoValidateAntiforgeryToken]
     public class CommentController : Controller
     {
         CommentManager commentManager = new CommentManager(new EfCommentRepository());
         private readonly IHttpContextAccessor _httpContext;
-        private  readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<User> _signInManager;
 
         public CommentController(IHttpContextAccessor httpContext, SignInManager<User> signInManager)
         {
@@ -21,21 +22,26 @@ namespace Bloger.Ul.Controllers
             _signInManager = signInManager;
         }
 
+
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult Success(int id)
+        {
+            return View(id);
+        }
+
         [AllowAnonymous]
         [HttpPost]
-        public string PartialAddComment(Comment comment)
+        public IActionResult PartialAddComment(Comment comment)
         {
-            string? message = "";
             var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
             if (userId == 0)
             {
-                message = "K";
+                return Json("K");
             }
             else
             {
@@ -45,7 +51,7 @@ namespace Bloger.Ul.Controllers
                 commentManager.CommentAdd(comment);
             }
 
-            return message;
+            return Json(Url.Action("Success", "Comment", new { id = comment.BlogId }));
         }
 
         public PartialViewResult CommentListByBlog(int id)

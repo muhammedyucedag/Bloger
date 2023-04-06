@@ -27,7 +27,7 @@ namespace Bloger.Ul
 
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddSession();
 
             // proje seviyesinde authorize iþlemi

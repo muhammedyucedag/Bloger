@@ -37,7 +37,13 @@ namespace Bloger.Ul.Controllers
         }
 
         [AllowAnonymous]
-        [Route("blogdetails/{id}" )] // slug yapısı
+        public IActionResult About()
+        {      
+            return View();
+        }
+
+        [AllowAnonymous]
+        [Route("blogdetails/{id}")] // slug yapısı
         public IActionResult BlogDetails(int id)
         {
             ViewBag.BlogId = id;
@@ -58,23 +64,23 @@ namespace Bloger.Ul.Controllers
 
         [HttpGet]
         public IActionResult BlogAdd()
-        {   
+        {
             List<SelectListItem> categoryvalues = (from x in
                     categoryManager.GetList()
-                select new SelectListItem
-                {
-                    Text = x.CategoryName,
-                    Value = x.CategoryId.ToString()
-                }).ToList();
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
             ViewBag.CategoryValues = categoryvalues;
             return View();
 
-            
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlogAdd(Blog blog,IFormFile formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
-            {
+        public async Task<IActionResult> BlogAdd(Blog blog, IFormFile formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
+        {
             BlogValidator validationRules = new BlogValidator();
             ValidationResult results = validationRules.Validate(blog);
 
@@ -91,7 +97,7 @@ namespace Bloger.Ul.Controllers
                     var file = formFile;
                     if (file.Length > 0)
                     {
-                        var fileName = file.FileName;     
+                        var fileName = file.FileName;
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
@@ -135,26 +141,46 @@ namespace Bloger.Ul.Controllers
         {
             var blogvalue = blogManager.TGetById(id);
             List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
-                select new SelectListItem
-                {
-                    Text = x.CategoryName,
-                    Value = x.CategoryId.ToString()
-                }).ToList();
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
 
             ViewBag.CategoryValues = categoryValues;
             return View(blogvalue);
         }
 
         [HttpPost]
-        public IActionResult EditBlog(Blog blog)
+        public async Task<IActionResult> EditBlog(Blog blog, IFormFile formFile)
         {
-            var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
+            BlogValidator validationRules = new BlogValidator();
+            ValidationResult results = validationRules.Validate(blog);
+            if (results.IsValid)
+            {
+                var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
-            blog.BlogStatus = true;
-            blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            blog.UserId = userId;
-            blogManager.Update(blog);
-            return RedirectToAction("BlogListByWriter");
+                blog.BlogStatus = true;
+                blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                blog.UserId = userId;
+                if (formFile != null && formFile.Length > 0)
+                {
+                    var file = formFile;
+                    if (file.Length > 0)
+                    {
+                        var fileName = file.FileName;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        blog.BlogImage = "/CoverImage/" + fileName;
+                    }
+                }
+                blogManager.Update(blog);
+                return RedirectToAction("BlogListByWriter");
+            }
+            return View();
         }
     }
 }

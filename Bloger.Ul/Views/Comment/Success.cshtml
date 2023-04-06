@@ -1,0 +1,17 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Success";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+<body onload="time(@Model);">
+    <h1>Başarılı bir şekilde yorum yaptınız. üç saniye sonra yönlendirileceksiniz.</h1>
+</body>
+
+<script>
+    function time(id) {
+        setTimeout(() => {
+            window.location.href = "/blogdetails/" + id;
+        }, "3000");
+    }
+</script>
