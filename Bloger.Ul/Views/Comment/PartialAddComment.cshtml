@@ -7,10 +7,11 @@
 }
 
 <div class="reply-form">
-
+    
     <h4>Bir yorum bırakın</h4>
     <p>E-posta hesabınız yayımlanmayacak.</p>
 
+    
     <div class="row">
         <div class="col-md-6 form-group">
             <input id="CommentUserName" name="CommentUserName" type="text" class="form-control" placeholder="Adınız Soyadınız">
@@ -24,6 +25,7 @@
             <textarea id="CommentContent" name="CommentContent" class="form-control" placeholder="Mesajınız"></textarea>
         </div>
     </div>
+    @Html.AntiForgeryToken()
     <button type="button" onclick="sendComment(@id);" class="btn btn-primary">Yorum Yap</button>
 </div>
 
@@ -43,14 +45,12 @@
                 BlogId: blogId
             }
         }).done(function (result) {
-            if (result == "") {
-                alert("Yorumunuz başarılı bir şekilde eklendi");
+            console.log(result);
+            if (result == "K") {
+                alert("Yorum yapabilmek için giriş sağlayınız");
             }
-            else if (result == "K")
-                alert("Yorum Yapabilmek için kullanıcı girişi sağlayın");
             else
-                alert("Yorumunuz eklenmedi. Bir hata oluştu")
-            location.reload();
+                window.location.href = result;
         }).fail(function (result) {
             if(result == "hata")
                 alert("Yorumunuz eklenmedi. Bir hata oluştu");

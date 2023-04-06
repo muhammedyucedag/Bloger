@@ -1,0 +1,80 @@
+﻿@inject SignInManager<User> signInManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+else
+{
+
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+}
+
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>Biz Kimiz?</h2>
+        </div>
+
+        <div class="row gy-4">
+            <div class="col-lg-6">
+                <h3>Sizleri tanımak bizim için bir zevk</h3>
+                <img src="~/assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
+                <p>
+                    Biz LastBLOG ekibi olarak, internet dünyasına merhaba diyoruz. Amacımız, ziyaretçilerimize faydalı ve ilgi çekici içerikler sunmaktır. İçeriklerimizde, birçok farklı konuda yazılar hazırlamanızı sağlıyoruz. Bunlar arasında sağlık, teknoloji, seyahat, eğlence, moda ve daha birçok konu yer alıyor.
+                <p>
+                    Ekip olarak, her birimiz konularında uzmanız. Bu sayede, ziyaretçilerimize kaliteli içerikler sunmaktan mutluluk duyuyoruz. Ayrıca, blogumuzda okuyucularımızın merak ettiği soruları yanıtlıyoruz. Sizlerin fikirleri ve geri bildirimleri bizim için çok önemlidir.
+                </p>
+
+                </p>
+
+            </div>
+            <div class="col-lg-6">
+                <div class="content ps-0 ps-lg-5">
+                    <p class="fst-italic">
+                        LastBLOG olarak, misyonumuz sizlere bilgi ve eğlence sunmaktır. Bu amaçla, farklı konularda araştırmalar yapıyor ve bu araştırmaların sonuçlarını sizlerle paylaşıyoruz. Amacımız, her yazımızda yeni bir şeyler öğrenmenizi sağlamak ve sizi eğlendirmektir.
+                    </p>
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i> Kaliteli İçerikler Sunmanız için ekibimizle beraber alt yapınızı hazırlıyoruz</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Blogumuzda, farklı konularda yazı yazmanız için sitemizi hazırlıyoruz. Bu sayede, okuyucularımızın ilgi alanlarına ve ihtiyaçlarına yönelik içerikler sunmasını sağlıyoruz.</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Misyonumuzun bir diğer önemli noktası, okuyucularımızla etkileşim kurmaktır. Sizlerin fikirleri ve geri bildirimleri bizim için çok önemlidir. Blogumuzda yer alan yazılara yorum yapmanızı sağlayıp iletişime geçmenizi hedefliyoruz.</li>
+                    </ul>
+                    <p>
+                        Sonuç olarak, LastBLOG ekibi olarak misyonumuz doğrultusunda, kaliteli içerikler sunmanızı, okuyucularımızın ihtiyaçlarına yönelik yazılar yazmanızı ve okuyucularımızla etkileşim kurmanızı sağlıyoruz. Amacımız sizlere faydalı olmak ve sizi bilgilendirirken aynı zamanda eğlendirmektir.
+                    </p>
+
+                    <div class="position-relative mt-4">
+                        <img src="~/assets/img/about-2.jpg" class="img-fluid rounded-4" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+@*<section id="clients" class="clients">
+    <div class="container" data-aos="zoom-out">
+        <div class="clients-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+                <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>
+                <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>
+            </div>
+        </div>
+
+    </div>
+</section>*@
+

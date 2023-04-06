@@ -49,6 +49,7 @@ namespace Bloger.Ul.Controllers
         [HttpGet]
         public async Task<IActionResult> LogOff()
         {
+            _httpContext.HttpContext.Session.Remove("UserId");        
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Blog");
         }
