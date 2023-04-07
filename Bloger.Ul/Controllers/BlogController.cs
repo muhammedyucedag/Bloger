@@ -47,8 +47,12 @@ namespace Bloger.Ul.Controllers
         public IActionResult BlogDetails(int id)
         {
             ViewBag.BlogId = id;
-            var values = blogManager.GetBlogById(id);
-            return View(values);
+            var blog = blogManager.GetBlogById(id);
+            if (blog == null)
+            {
+                return RedirectToAction("Error404","ErrorPage");
+            }
+            return View(blog);
         }
 
         public async Task<IActionResult> BlogListByWriter()
@@ -130,10 +134,8 @@ namespace Bloger.Ul.Controllers
         }
 
         public IActionResult DeleteBlog(int id)
-        {
-            var blogvalues = blogManager.TGetById(id);
-            blogManager.Delete(blogvalues);
-
+        { 
+            blogManager.DeleteBlog(id);
             return RedirectToAction("BlogListByWriter", "Blog");
         }
 

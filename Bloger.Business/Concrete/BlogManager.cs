@@ -68,5 +68,10 @@ namespace Bloger.Business.Concrete
         {
             return _blogRepository.GetBlogById( id);
         }
+
+        public int DeleteBlog(int id)
+        {
+            return _blogRepository.DeleteBlog(id);
+        }
     }
 }

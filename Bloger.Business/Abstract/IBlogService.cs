@@ -15,5 +15,7 @@ namespace Bloger.Business.Abstract
         // kullanıcıya göre blog listeleme
         List<Blog> GetBlogListByUser(int id);
 
+        int DeleteBlog(int id);
+
     }
 }
