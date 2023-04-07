@@ -11,13 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.DataAccess.EntityFramework
 {
-    public class EfBlogRepository:GenericRepository<Blog>
+    public class EfBlogRepository : GenericRepository<Blog>
     {
         public List<Blog> GetListWithCategory()
         {
             using (var context = new Context())
             {
-                return context.Blog.Include(x=>x.User).Include(x=>x.Category).ToList();
+                return context.Blog.Include(x => x.User).Include(x => x.Category).Where(x => x.BlogStatus).ToList();
             }
         }
 
@@ -26,7 +26,7 @@ namespace Bloger.DataAccess.EntityFramework
             // user id göre blogları çekiyoruz ama çekerken categori ve userin bilgilerini inculde ediyoruz
             using (var context = new Context())
             {
-                return context.Blog.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id).ToList();
+                return context.Blog.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id && x.BlogStatus).ToList();
             }
         }
 
@@ -35,8 +35,19 @@ namespace Bloger.DataAccess.EntityFramework
             //çektiğim blog blogid göre gelecek bunu çekerken içerisindeki user ve category dolu gelecek.
             using (var context = new Context())
             {
-                return context.Blog.Include(x =>x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id);
-                
+                return context.Blog.Include(x => x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id && x.BlogStatus);
+
+            }
+        }
+
+        public int DeleteBlog(int id)
+        {
+            using (var context = new Context())
+            {
+                var blog = context.Blog.FirstOrDefault(x => x.BlogId == id);
+                blog.BlogStatus = false;
+                context.Update(blog);
+                return context.SaveChanges();
             }
         }
     }
