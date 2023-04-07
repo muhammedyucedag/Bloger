@@ -1,0 +1,75 @@
+﻿@model Bloger.Entity.Concrete.Category
+@{
+    ViewData["Title"] = "EditCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>EditCategory</h1>
+
+<form method="post" action="EditCategory">
+    <div class="section-header">
+        <h2>Kategori Güncelle</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 categoryadd">
+            <div>
+                <label class="form-label">Kategori Adı</label>
+                @Html.TextBoxFor(x=>x.CategoryId,new{@class="form-control"})
+            </div>
+            <br />
+            <div>
+                <label class="form-label">Kategori Adı</label>
+                @Html.TextBoxFor(x=>x.CategoryName,new{@class="form-control"})
+                @Html.ValidationMessageFor(x=>x.CategoryName)
+            </div>
+            <br />
+            <div class="mb-1">
+                <label class="form-label">Kategori Açıklaması</label>
+                @Html.TextAreaFor(x=>x.CategoryDescription,15,3, new{@class="form-control"})
+                @Html.ValidationMessageFor(x=>x.CategoryDescription)
+            </div>
+            <br />
+            <button class="saved"><i class="bi bi-upload me-2"></i>Kaydet</button>
+            <button class="backtolist">
+                <a class="backtolistlink" href="/Admin/Category/Index/"><i class="bi bi-arrow-left me-2"></i>Listeye Dön</a>
+            </button>
+        </div>
+    </div>
+
+</form>
+
+
+<style>
+    .saved {
+        background-color: #eb5f42;
+        color: white;
+        border: none;
+        width: 95px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolist {
+        background-color: #316464;
+        color: white;
+        border: none;
+        width: 120px;
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .backtolistlink {
+        color: white;
+    }
+
+        .backtolistlink:hover {
+            color: white;
+        }
+
+    /* .categoryadd {
+            margin-left: 29%;
+        }*/
+
+</style>
+
+
