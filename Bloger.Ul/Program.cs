@@ -66,11 +66,15 @@ namespace Bloger.Ul
             app.UseStaticFiles();
             app.UseSession();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); // üyeyi kontol eder
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization(); // yetkiyi konrol eder  
+
+            app.MapControllerRoute( // area için program cs eklentisi
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
