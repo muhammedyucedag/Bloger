@@ -37,6 +37,8 @@ namespace Bloger.Ul.Controllers
         [HttpPost]
         public IActionResult PartialAddComment(Comment comment)
         {
+            Context context = new Context();
+            
             var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
             if (userId == 0)
@@ -48,6 +50,7 @@ namespace Bloger.Ul.Controllers
                 comment.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 comment.CommentStatus = true;
                 comment.UserId = userId;
+                comment.CommentUserName = context.Users.Find(userId).NameSurname; // veeritabanında kullanınının namesurname ulaşmam gerekli
                 commentManager.CommentAdd(comment);
             }
 
