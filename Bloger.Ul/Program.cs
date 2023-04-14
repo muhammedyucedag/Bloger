@@ -25,7 +25,6 @@ namespace Bloger.Ul
             builder.Services.AddHttpContextAccessor();
 
 
-
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddSession();
@@ -49,7 +48,7 @@ namespace Bloger.Ul
                 opts.LoginPath = "/Blog/Index/";
                 opts.SlidingExpiration = true;
             });
-
+                
             var app = builder.Build();
 
 
@@ -60,6 +59,7 @@ namespace Bloger.Ul
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404", "?code={0}"); // error sayfasý
 
             app.UseHttpsRedirection();

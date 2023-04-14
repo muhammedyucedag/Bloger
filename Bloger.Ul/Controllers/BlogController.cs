@@ -96,20 +96,29 @@ namespace Bloger.Ul.Controllers
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
 
-                if (formFile != null && formFile.Length > 0)
+                try
                 {
-                    var file = formFile;
-                    if (file.Length > 0)
+                    if (formFile != null && formFile.Length > 0)
                     {
-                        var fileName = file.FileName;
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
-                        using (var stream = new FileStream(path, FileMode.Create))
+                        var file = formFile;
+                        if (file.Length > 0)
                         {
-                            await file.CopyToAsync(stream);
+                            var fileName = file.FileName;
+                            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            blog.BlogImage = "/CoverImage/" + fileName;
                         }
-                        blog.BlogImage = "/CoverImage/" + fileName;
                     }
                 }
+                catch (Exception error)
+                {
+
+                    return Content(error.ToString());
+                }
+                
 
                 blogManager.Add(blog);
 

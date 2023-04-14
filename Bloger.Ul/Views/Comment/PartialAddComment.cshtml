@@ -9,14 +9,12 @@
 <div class="reply-form">
     
     <h4>Bir yorum bırakın</h4>
-    <p>E-posta hesabınız yayımlanmayacak.</p>
-
     
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <input id="CommentUserName" name="CommentUserName" type="text" class="form-control" placeholder="Adınız Soyadınız">
-        </div>
-        <div class="col-md-6 form-group">
+    <div class="row" >
+      @*  <div class="col-md-6 form-group" style="display:none">
+            <input id="CommentUserName" name="CommentUserName" type="hidden" class="form-control" placeholder="@User.Identity.Name">
+        </div>*@
+        <div class="col-md-12 form-group">
             <input id="CommentTitle" name="CommentTitle" type="text" class="form-control" placeholder="Konu">
         </div>
     </div>
@@ -31,7 +29,7 @@
 
 <script>
     function sendComment(id) {
-        var commentUserName = $("#CommentUserName").val();
+        //var commentUserName = $("#CommentUserName").val();
         var commentTitle = $("#CommentTitle").val();
         var commenContent = $("#CommentContent").val();
         var blogId = id;
@@ -39,7 +37,7 @@
             method: "post",
             url: "/Comment/PartialAddComment/",
             data: {
-                CommentUserName: commentUserName,
+                //CommentUserName: commentUserName,
                 CommentTitle: commentTitle,
                 CommentContent: commenContent,
                 BlogId: blogId

@@ -23,11 +23,17 @@ else
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 
+<div class="mb-3">
+    <section class="Blog-Add">
+        <div class="container text-center">
+            <a class="cta-btn" href="/blog/blogadd">Blog Oluştur</a>
+        </div>
+    </section>
+</div>
 
 <section id="portfolio" class="portfolio sections-bg">
     <div class="container" data-aos="fade-up">
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
-
             <div class="row gy-4 portfolio-container">
                 @foreach (var item in Model)
                 {
@@ -65,7 +71,7 @@ else
                             </div>
 
                             <div class="dropdown" style="left: 76%">
-                                <button style="background-color: #316464; color: whitesmoke" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button style="background-color: #2d3436; color: whitesmoke" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     İşlemler
                                 </button>
                                 <ul class="dropdown-menu">
@@ -75,9 +81,7 @@ else
                                     <li>
                                         <a href="/blog/editblog/@item.BlogId" editbtn title="Düzenle" class="dropdown-item"><i class="bi-pencil-square text-dark"></i> - Blog Düzenle</a>
                                     </li>
-                                    <li>
-                                        <a href="/blog/blogadd" class="dropdown-item"><i class="bi bi-plus-circle text-dark"></i> - Blog Oluştur</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
