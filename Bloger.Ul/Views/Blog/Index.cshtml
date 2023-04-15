@@ -66,11 +66,10 @@ else
                                     }...
                                 </p>
                                 <br />
-                               @* <p class="post-date">
-                                    <i class="bi bi-person"></i> <time>@item.User.UserName</time>
-                                </p>*@
+                             
                                 <p class="post-date">
-                                    <a href="/UserProfile/Index/@item.User.Id"><i class="bi bi-person" style="color:black" ></i> <time>@item.User.UserName</time></a>
+                                    @*<a href="/UserProfile/Index/@item.User.Id"><i class="bi bi-person" style="color:black" ></i> <time>@item.User.UserName</time></a>*@
+                                    <a href="/UserProfile/AuthorPosts/@item.User.Id"><i class="bi bi-person" style="color:black"></i> <time>@item.User.UserName</time></a>
                                 </p>
                                 <p class="post-date">
                                     <i class="bi bi-clock"></i> <time>@(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))</time>

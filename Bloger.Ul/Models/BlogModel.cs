@@ -10,9 +10,7 @@ namespace Bloger.Ul.Models
         public IFormFile BlogImage { get; set; }
         public DateTime BlogCreateDate { get; set; }
         public bool BlogStatus { get; set; }
-        public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public List<User> Users { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }
