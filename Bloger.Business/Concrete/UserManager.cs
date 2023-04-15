@@ -48,5 +48,15 @@ namespace Bloger.Business.Concrete
         {
             return _userRepository.GetUserByUsername(username);
         }
+        public string GetByNameSurname(int id)
+        {
+            return _userRepository.GetUserByNameSurname(id);
+        }
+
+        public List<User> GetUserById(int id)
+        {
+            return _userRepository.GetUserById(id);
+        }
+
     }
 }
