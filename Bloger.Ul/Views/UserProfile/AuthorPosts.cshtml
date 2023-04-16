@@ -1,4 +1,4 @@
-﻿@model HomePageModel
+﻿@model UserDetailViewModel
 
 @inject SignInManager<User> signInManager
 
@@ -52,8 +52,8 @@ else
                         {
                             <div class="col-lg-6 col-md-6">
                                 <article class="post-grid mb-5">
-                                    <div class="post-thumb mb-4 ">
-                                        <img src="@item.BlogImage" alt="" style="height:270px; width:330px;">
+                                    <div class="post-thumb mb-4">
+                                        <img src="@item.BlogImage" alt="" style="height:270px; width:360px;">
                                     </div>
                                     <div class="portfolio-info">
 
@@ -95,10 +95,23 @@ else
                                     <img src="~/socialmediatemplate/images/author.jpg" alt="" class="img-fluid">
                                 </div>
 
-                                <h4 class="mb-0 mt-4">@ViewBag.NameSurname</h4>
+                                <h4 class="mb-0 mt-4">@Model.User.NameSurname</h4>
 
-                                <p>@User.Identity.Name</p>
-                                <p>I'm Liam, last year I decided to quit my job and travel the world. You can follow my journey on this blog!</p>
+                                <p>@Model.User.UserName</p>
+                                <p>
+                                    @{
+                                        if (Model.User.CoverLetter.Length < 130)
+                                        {
+                                            @Model.User.CoverLetter
+
+                                        }
+                                        else
+                                        {
+                                            @Model.User.CoverLetter.Substring(0,130)
+
+                                        }
+                                    }
+                                </p>
                                 <img src="~/socialmediatemplate/images/liammason.png" alt="" class="img-fluid">
                             </div>
 

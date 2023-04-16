@@ -31,7 +31,8 @@ namespace Bloger.Ul.Controllers
                 {
                     Email = userSignUpViewModel.Mail,
                     UserName = userSignUpViewModel.UserName,
-                    NameSurname = userSignUpViewModel.NameSurname
+                    NameSurname = userSignUpViewModel.NameSurname,
+                    CoverLetter = userSignUpViewModel.CoverLetter
 
                 };
 

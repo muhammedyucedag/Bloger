@@ -14,37 +14,32 @@ namespace Bloger.Ul.Controllers
         UserManager userManager = new UserManager(new EfUserRepository());
         private readonly IHttpContextAccessor _httpContext;
 
-
         public UserProfileController(IHttpContextAccessor httpContext)
         {
             _httpContext = httpContext;
         }
+
         public IActionResult Index()
         {
-            HomePageModel model = new HomePageModel();
+            UserDetailViewModel model = new UserDetailViewModel();
             var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
             var userblogs = blogManager.GetListWithCategoryByUserBm(userId);
-            var users = userManager.GetByNameSurname(userId);
-
+            var user = userManager.TGetById(userId);
             model.Blogs = userblogs;
-            ViewBag.NameSurname = users;
+            model.User = user;
 
             return View(model);
         }
 
         public IActionResult AuthorPosts(int id)
         {
-            HomePageModel model = new HomePageModel();
-            var userId = userManager.GetUserById(id);
-            var userblogs = blogManager.GetListWithCategoryByUserBm(id) ;
-            var users = userManager.GetByNameSurname(id);
-
+            UserDetailViewModel model = new UserDetailViewModel();
+            var userblogs = blogManager.GetListWithCategoryByUserBm(id);
+            var user = userManager.TGetById(id);
             model.Blogs = userblogs;
-            model.Users = userId;
-            ViewBag.NameSurname = users;
+            model.User = user;
 
             return View(model);
         }
-
     }
 }

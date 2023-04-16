@@ -8,12 +8,10 @@
 <head>
     <meta charset="utf-8">
     <title>Form-v5 by Colorlib</title>
-    <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- Font-->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/Register/css/roboto-font.css">
     <link rel="stylesheet" type="text/css" href="~/Register/fonts/font-awesome-5/css/fontawesome-all.min.css">
-    <!-- Main Style Css -->
     <link rel="stylesheet" href="~/Register/css/style.css" />
 </head>
 <body>
@@ -24,45 +22,56 @@
                     Hesap Kayıt Formu
                 </h2>
                 <div class="form-row">
-                    <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
+                    <span asp-validation-for="NameSurname" class="text-danger"></span>
                     <label for="full-name">Ad Soyad</label>
                     <input type="text" asp-for="@Model.NameSurname" class="form-control" placeholder="Ad Soyad" required>
-                    <i class="fas fa-user"></i>
+                    
                 </div>
-                <br/>
+                <br />
                 <div class="form-row">
-                    <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                     <label for="full-name">Kullanıcı Adınız</label>
                     <input type="text" asp-for="@Model.UserName" class="form-control" placeholder="Kullanıcı Adınız">
-                    <i class="fas fa-user"></i>
                 </div>
                 <br />
                 <div class="form-row">
-                    <span asp-validation-for="@Model.Mail" class="text-danger"></span>
+                    <span asp-validation-for="CoverLetter" class="text-danger"></span>
+                    <label for="full-name">Hakkınızda</label>
+                    <input type="text" asp-for="@Model.CoverLetter" class="form-control" placeholder="Hakkınızda" lin="60px">
+                    @*@Html.TextAreaFor(x=>x.CoverLetter,15,76, new{@class="form-control"})*@
+                </div>
+                <br />
+                <div class="form-row">
+                    <span asp-validation-for="Mail" class="text-danger"></span>
                     <label>E-Mail</label>
-                    <input type="email" class="form-control"  asp-for="@Model.Mail" placeholder="E-Mail Adress">
-                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" asp-for="@Model.Mail" placeholder="E-Mail Adress">
                 </div>
                 <br />
                 <div class="form-row">
-                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                     <label>Şifre</label>
                     <input type="password" class="form-control" asp-for="@Model.Password" placeholder="Şifreniz">
-                    <i class="fas fa-lock"></i>
                 </div>
                 <br />
                 <div class="form-row">
-                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     <label>Şifre Tekrarı</label>
                     <input type="password" class="form-control" asp-for="@Model.ConfirmPassword" placeholder="Şifre Tekrarı" required="">
-                    <i class="fas fa-lock"></i>
+                    
                 </div>
                 <br />
                 <div class="form-row-last">
-                    <input type="submit" name="register" class="register" value="Kayıt Ol">
+                    <input type="submit" name="register" class="register" value="Kayıt Ol">                   
                 </div>
+                <div class="form-row-last">
+                    <a href="/Login/Index/" class="btn btn-secondary">Giriş Ekranına Dön</a>
+                </div>
+                
 
             </form>
+           
+
+
         </div>
     </div>
 </body>
