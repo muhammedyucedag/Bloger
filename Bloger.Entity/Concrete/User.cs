@@ -10,6 +10,7 @@ namespace Bloger.Entity.Concrete
     public class User : IdentityUser<int>
     {
         public string NameSurname { get; set; }
+        public string CoverLetter { get; set; }
         public string? ImageUrl { get; set; }
 
         public virtual List<Blog> Blogs { get; set; } // Kullanıcının birden fazla notları varıdr.

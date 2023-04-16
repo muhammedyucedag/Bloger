@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var userid = ViewData["UserId"];
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
@@ -47,7 +48,7 @@
                 <li class="dropdown">
                     <a href="#"><span><i class="fa fa-user me-2"></i>@User.Identity.Name</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a style="color:#2d3436" href="/UserProfile/Index">Profil</a></li>
+                        <li><a style="color:#2d3436" href="/UserProfile/Index/">Profil</a></li>
                         <li><a style="color:#2d3436" href="/Blog/BlogListByWriter">Blog Listem</a></li>
                         <li><a style="color:#2d3436" href="/Blog/BlogAdd">Blog Oluştur</a></li>
                     </ul>

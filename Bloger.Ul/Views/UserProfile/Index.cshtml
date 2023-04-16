@@ -1,4 +1,4 @@
-﻿@model HomePageModel
+﻿@model UserDetailViewModel
 
 @inject SignInManager<User> signInManager
 
@@ -94,11 +94,23 @@ else
                                     <img src="~/socialmediatemplate/images/author.jpg" alt="" class="img-fluid">
                                 </div>
 
-                                <h4 class="mb-0 mt-4">@ViewBag.NameSurname</h4>
+                                <h4 class="mb-0 mt-4">@Model.User.NameSurname</h4> 
 
-                                <p>@User.Identity.Name</p>
-                                <p>I'm Liam, last year I decided to quit my job and travel the world. You can follow my journey on this blog!</p>
-                                <img src="~/socialmediatemplate/images/liammason.png" alt="" class="img-fluid">
+                                <p>@Model.User.UserName</p>
+                                @{
+                                    if (Model.User.CoverLetter.Length < 130)
+                                    {
+                                        @Model.User.CoverLetter
+                                    }
+                                    else
+                                    {
+                                        @Model.User.CoverLetter.Substring(0,130)
+                                    }                                 
+                                }...
+                                <br />
+                                <br />
+                                <img src="~/socialmediatemplate/images/logo.png" alt="" class="img-fluid">
+
                             </div>
 
                             <div class="sidebar-widget mb-5 ">

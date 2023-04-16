@@ -38,7 +38,7 @@ namespace Bloger.Ul.Controllers
 
         [AllowAnonymous]
         public IActionResult About()
-        {      
+        {
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace Bloger.Ul.Controllers
             var blog = blogManager.GetBlogById(id);
             if (blog == null)
             {
-                return RedirectToAction("Error404","ErrorPage");
+                return RedirectToAction("Error404", "ErrorPage");
             }
             return View(blog);
         }
@@ -118,7 +118,7 @@ namespace Bloger.Ul.Controllers
 
                     return Content(error.ToString());
                 }
-                
+
 
                 blogManager.Add(blog);
 
@@ -143,7 +143,7 @@ namespace Bloger.Ul.Controllers
         }
 
         public IActionResult DeleteBlog(int id)
-        { 
+        {
             blogManager.DeleteBlog(id);
             return RedirectToAction("BlogListByWriter", "Blog");
         }
