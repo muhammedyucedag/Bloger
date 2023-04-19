@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>EditCategory</h1>
-
 <form method="post" action="EditCategory">
     <div class="section-header">
         <h2>Kategori Güncelle</h2>
@@ -13,8 +11,7 @@
     <div class="row">
         <div class="col-12 categoryadd">
             <div>
-                <label class="form-label">Kategori Adı</label>
-                @Html.TextBoxFor(x=>x.CategoryId,new{@class="form-control"})
+                <input type="hidden" @Model.CategoryId/>
             </div>
             <br />
             <div>

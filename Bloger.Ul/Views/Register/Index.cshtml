@@ -1,4 +1,5 @@
 ﻿@model UserSignUpViewModel
+
 @{
     Layout = null;
 }
@@ -13,11 +14,18 @@
     <link rel="stylesheet" type="text/css" href="~/Register/css/roboto-font.css">
     <link rel="stylesheet" type="text/css" href="~/Register/fonts/font-awesome-5/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="~/Register/css/style.css" />
+   
 </head>
+
+
+
 <body>
     <div class="page-content">
         <div class="form-v5-content">
+           
             <form role="form" asp-action="Index" class="form-detail">
+
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <h2>
                     Hesap Kayıt Formu
                 </h2>
@@ -25,7 +33,7 @@
                     <span asp-validation-for="NameSurname" class="text-danger"></span>
                     <label for="full-name">Ad Soyad</label>
                     <input type="text" asp-for="@Model.NameSurname" class="form-control" placeholder="Ad Soyad" required>
-                    
+
                 </div>
                 <br />
                 <div class="form-row">
@@ -57,19 +65,19 @@
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     <label>Şifre Tekrarı</label>
                     <input type="password" class="form-control" asp-for="@Model.ConfirmPassword" placeholder="Şifre Tekrarı" required="">
-                    
+
                 </div>
                 <br />
                 <div class="form-row-last">
-                    <input type="submit" name="register" class="register" value="Kayıt Ol">                   
+                    <input type="submit" name="register" class="register" value="Kayıt Ol">
                 </div>
                 <div class="form-row-last">
                     <a href="/Login/Index/" class="btn btn-secondary">Giriş Ekranına Dön</a>
                 </div>
-                
+
 
             </form>
-           
+
 
 
         </div>

@@ -5,6 +5,7 @@ using Bloger.Ul.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bloger.Ul.Controllers
 {
@@ -24,7 +25,7 @@ namespace Bloger.Ul.Controllers
         {
             return View();
         }
-
+            
         [HttpPost]
         public async Task<IActionResult> Index(UserSignInViewModel signIn)
         {
@@ -40,7 +41,8 @@ namespace Bloger.Ul.Controllers
 				}
 		        else
 		        {
-			        return RedirectToAction("Index", "Login");
+                    ViewData["Error"] = "Kullanıcı adı yada şifre yanlış";
+                    return View(); // 
 		        }
 	        }
 	        return View();
