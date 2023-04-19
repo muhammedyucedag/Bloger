@@ -94,8 +94,7 @@ else
                                     <img src="~/socialmediatemplate/images/author.jpg" alt="" class="img-fluid">
                                 </div>
 
-                                <h4 class="mb-0 mt-4">@Model.User.NameSurname</h4> 
-
+                                <h4 class="mb-0 mt-4">@Model.User.NameSurname <a style="text-decoration:none;" href="/userprofile/UserEditProfile" title="Kullanıcı Düzenle"><i class="fa-solid fa-user-pen ms-2 "></i></a> </h4>
                                 <p>@Model.User.UserName</p>
                                 @{
                                     if (Model.User.CoverLetter.Length < 130)

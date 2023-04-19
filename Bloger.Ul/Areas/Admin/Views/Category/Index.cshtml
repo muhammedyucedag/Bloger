@@ -55,7 +55,7 @@
     $(document).ready(function () {
         $('[data-switch]').change(function (event) {
             let CategoryId = $(this).data("switch")
-            let isChecked = $(this).is(':checked')
+            let isChecked = $(this).is(':checked')  
             const postData = {
                 id: CategoryId,
                 status: isChecked
