@@ -38,7 +38,7 @@ namespace Bloger.DataAccess.EntityFramework
                 return context.Blog.Include(x => x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id && x.BlogStatus);
 
             }
-        }
+        }    
 
         public int DeleteBlog(int id)
         {

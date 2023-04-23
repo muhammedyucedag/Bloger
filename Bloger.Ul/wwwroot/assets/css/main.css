@@ -2061,7 +2061,6 @@ section {
 .hero {
     width: 100%;
     position: relative;
-    background: var(--color-primary);
     padding: 60px 0 0 0;
 }
 
@@ -2075,13 +2074,15 @@ section {
     font-size: 48px;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #fff;
+    color: #2d3436;
+    text-align: center;
 }
 
 .hero p {
-    color: rgba(255, 255, 255, 0.6);
+    color: #2d3436;
     font-weight: 400;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .hero .btn-get-started {

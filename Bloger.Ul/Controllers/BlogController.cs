@@ -10,6 +10,8 @@ using Bloger.Business.ValidationRules;
 using Bloger.Ul.Models;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Bloger.DataAccess.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.Ul.Controllers
 {
@@ -18,11 +20,12 @@ namespace Bloger.Ul.Controllers
         private BlogManager blogManager = new BlogManager(new EfBlogRepository());
         CategoryManager categoryManager = new CategoryManager(new EfCategoryRepository());
         private readonly IHttpContextAccessor _httpContext;
+        private readonly Context _context;
 
-
-        public BlogController(IHttpContextAccessor httpContext)
+        public BlogController(IHttpContextAccessor httpContext, Context context)
         {
             _httpContext = httpContext;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -44,15 +47,20 @@ namespace Bloger.Ul.Controllers
 
         [AllowAnonymous]
         [Route("blogdetails/{id}")] // slug yapısı
-        public IActionResult BlogDetails(int id)
+        public async Task<IActionResult> BlogDetails(int id)
         {
+            BlogDetailsViewModel model = new BlogDetailsViewModel();
             ViewBag.BlogId = id;
             var blog = blogManager.GetBlogById(id);
-            if (blog == null)
+            var category = categoryManager.GetBlogOrCategoryNumber();
+            model.Categories = category;
+            model.Blog = blog;
+
+            if (model == null)
             {
                 return RedirectToAction("Error404", "ErrorPage");
             }
-            return View(blog);
+            return View(model);
         }
 
         public async Task<IActionResult> BlogListByWriter()

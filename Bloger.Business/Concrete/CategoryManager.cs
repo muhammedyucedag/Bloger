@@ -49,5 +49,9 @@ namespace Bloger.Business.Concrete
         {
             return _categoryRepository.GetCategoriesForHomePage();
         }
+        public List<Category> GetBlogOrCategoryNumber() 
+        { 
+            return _categoryRepository.GetBlogOrCategoryNumber();
+        }
     }
 }

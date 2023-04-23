@@ -4,8 +4,31 @@
     ViewData["Title"] = "Success";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <i class="fa fa-comment fa-2xl"></i>
+        </div>
+    </div>
+</div>
+
 <body onload="time(@Model);">
-    <h1>Başarılı bir şekilde yorum yaptınız. üç saniye sonra yönlendirileceksiniz.</h1>
+    <section id="hero" class="hero">
+        <div class="container position-relative">
+            <div class="row gy-12" data-aos="fade-in">
+                <div class="col-lg-12 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+                    <h2>LAST<span>BLOG</span></h2>
+                    <p>
+                        Yorumunuz için teşekkürler! 3 saniye içinde otomatik olarak sayfa yenilenecektir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 <script>
