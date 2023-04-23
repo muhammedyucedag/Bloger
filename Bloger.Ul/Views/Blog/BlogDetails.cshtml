@@ -1,4 +1,4 @@
-﻿@model Blog
+﻿@model BlogDetailsViewModel
 @inject SignInManager<User> signInManager
 @inject UserManager<User> UserManager
 
@@ -21,54 +21,40 @@ else
         <div class="row g-5">
 
             <div class="col-lg-8">
-                    <article class="blog-details">
+                <article class="blog-details">
 
-                        <div class="post-img">
-                            <img src="@Model.BlogImage" alt="" class="" style="height:550px;width:850px"> @*maksimum size ayarla ve toplam mb ayarla ve uzantı kontrol yap*@
-                        </div>
-
-                        <h2 class="title">@Model.BlogTitle</h2>
-
-                        <div class="meta-top">
-                            <ul>
-                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a>@Model.User.UserName</a></li>
-                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a><time datetime="2020-01-01">@(((DateTime)Model.BlogCreateDate).ToString("dd-MM-yyyy"))</time></a></li>
-                                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a>@Model.Comments.Count() yorum</a></li>
-                            </ul>
-                        </div><!-- End meta top -->
-
-                        <div class="content">
-                            <p>
-                            @Model.BlogContent
-                            </p>
-                            <blockquote>
-                                <p>
-                                @Model.BlogTitle
-                                </p>
-                            </blockquote>
-                        </div><!-- End post content -->
-                    </article>
-                    
-
-                <div class="post-author d-flex align-items-center">
-                    <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
-                    <div>
-                        <h4>Jane Smith</h4>
-                        <div class="social-links">
-                            <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
-                            <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-                            <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
-                        </div>
-                        <p>
-                            Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
-                        </p>
+                    <div class="post-img">
+                        <img src="@Model.Blog.BlogImage" alt="" class="" style="height:550px;width:850px"> @*maksimum size ayarla ve toplam mb ayarla ve uzantı kontrol yap*@
                     </div>
-                </div><!-- End post author -->
+
+                    <h2 class="title">@Model.Blog.BlogTitle</h2>
+
+                    <div class="meta-top">
+                        <ul>
+                            <li>
+                                <a class="d-flex align-items-center" href="/UserProfile/AuthorPosts/@Model.Blog.User.Id"><i class="bi bi-person"></i> <time>@Model.Blog.User.UserName</time></a>
+                            </li>
+                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a><time datetime="2020-01-01">@(((DateTime)Model.Blog.BlogCreateDate).ToString("dd-MM-yyyy"))</time></a></li>
+                            <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a>@Model.Blog.Comments.Count() yorum</a></li>
+                        </ul>
+                    </div><!-- End meta top -->
+
+                    <div class="content">
+                        <p>
+                            @Model.Blog.BlogContent
+                        </p>
+                        <blockquote>
+                            <p>
+                                @Model.Blog.BlogTitle
+                            </p>
+                        </blockquote>
+                    </div><!-- End post content -->
+                </article>
 
                 <div class="comments">
                     @await Component.InvokeAsync("CommentListByBlog",new {id = ViewBag.BlogId})
 
-                    
+
 
                     @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
 
@@ -80,15 +66,17 @@ else
 
                 <div class="sidebar">
 
-                    <div class="sidebar-item search-form">
-                        <h3 class="sidebar-title">Search</h3>
-                        <form action="" class="mt-3">
-                            <input type="text">
-                            <button type="submit"><i class="bi bi-search"></i></button>
-                        </form>
-                    </div><!-- End sidebar search formn-->
 
-                    @await Component.InvokeAsync("CategoryList")
+                    <div class="sidebar-item categories">
+                        <h3 class="sidebar-title">Kategoriler</h3>
+                        <ul class="mt-3">
+                            @foreach (var item in Model.Categories)
+                            {
+                                <li><a href="#">@item.CategoryName <span>(@item.Blogs.Count())</span></a></li>
+                            }
+
+                        </ul>
+                    </div><!-- End sidebar categories-->
 
                     @await Component.InvokeAsync("WriterLastBlog")
 
@@ -100,4 +88,3 @@ else
 
     </div>
 </section><!-- End Blog Details Section -->
-

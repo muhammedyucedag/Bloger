@@ -27,7 +27,7 @@ namespace Bloger.Ul.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Success(int id)
         {
             return View(id);
