@@ -26,22 +26,24 @@
         int sıra = 0;
     }
 
-   @foreach (var item in Model)
+    @foreach (var category in Model)
     {
         sıra++;
         <tr>
             <td>@sıra</td>
-            <td>@item.CategoryName</td>
+            <td>@category.CategoryName</td>
             <td>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" data-switch="@item.CategoryId" @(item.CategoryStatus ? "checked" : "")>
-            </div>
+                @if (category.IsDeleted)
+                {
+                    <button data-active="@category.CategoryId" class="btn btn-danger">Pasif</button>
+                }
+                else
+                {
+                    <button data-passive="@category.CategoryId" class="btn btn-success">Aktif</button>
+                }
             </td>
-            @*<input type="checkbox" name="CategoryStatus" value="true"/>*@
-            @*<td class="">
-        <i class="fa fa-@(item.CategoryStatus ? "check text-success" : "times text-danger")"></i>
-        </td>*@
-            <td><a href="/Admin/Category/EditCategory/@item.CategoryId" class="btn btn-success">Düzenle</a></td>
+           
+            <td><a href="/Admin/AdminCategory/EditCategory/@category.CategoryId" class="btn btn-success">Düzenle</a></td>
         </tr>
     }
 
@@ -53,29 +55,105 @@
 
 <script>
     $(document).ready(function () {
-        $('[data-switch]').change(function (event) {
-            let CategoryId = $(this).data("switch")
-            let isChecked = $(this).is(':checked')  
-            const postData = {
-                id: CategoryId,
-                status: isChecked
-            }
-            $.ajax({
-                method: "post",
-                url: '/Admin/Category/status/',
-                data: postData
-            }).done( function(e){
 
-                swal({
+        $('[data-active]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
 
-                    title: e,
-                    icon: "success",
+            const buttonElement = $(this)
 
-                })
+            swal({
+                title: "Aktif edilsin mi ?",
+                text: "Bu işlem seçtiğiniz kategoriyi aktif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Aktif Et"],
 
-            } )
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminCategory/Active/' + buttonElement.data('active'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Aktif etme işlemi başarılı",
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Aktif etme işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Akitf etme işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+
+
         })
 
+        $('[data-passive]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
+
+            const buttonElement = $(this)
+
+            swal({
+
+                title: "Pasif edilsin mi ?",
+                text: "Bu işlem seçmiş olduğunuz kategoriyi pasif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Pasif Et"],
+                dangerMode: true
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminCategory/Passive/' + buttonElement.data('passive'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Pasif işlemi başarılı",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Pasif işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Pasif işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+        })
     })
 </script>
 

@@ -30,14 +30,19 @@ namespace Bloger.Ul.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var values = blogManager.GetBlogListWithCategory();
+            var values = blogManager.GetAdminBlogListWithCategory(x=>x.IsActive);
             return View(values);
         }
 
         public IActionResult Detail()
         {
-            var values = blogManager.GetBlogListWithCategory();
-            return View(values);
+            var values = blogManager.GetAdminBlogListWithCategory(x => x.IsActive);
+
+            AdminControllerDetailBlogViewModel model = new AdminControllerDetailBlogViewModel
+            {
+                Blogs = values
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -74,8 +79,9 @@ namespace Bloger.Ul.Areas.Admin.Controllers
                     BlogTitle = model.BlogTitle,
                     CategoryId = model.CategoryId,
                     UserId = userId,
-                    BlogStatus = true,
-                    BlogCreateDate= DateTime.Now
+                    IsDeleted = false,
+                    IsActive = true,
+                    BlogCreateDate = DateTime.Now
                 };
 
                 try
@@ -122,6 +128,25 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             //    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
             //}
             return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Passive(int id)
+        {
+            var project = blogManager.TGetById(id);
+            project.IsDeleted = true;
+            blogManager.Update(project);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Active(int id)
+        {
+            var project = blogManager.TGetById(id);
+            project.IsDeleted = false;
+            blogManager.Update(project);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Bloger.Entity.Concrete
         public string BlogContent { get; set; }
         public string? BlogImage { get; set; }
         public DateTime BlogCreateDate { get; set; }
-        public bool BlogStatus { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public int UserId { get; set; }

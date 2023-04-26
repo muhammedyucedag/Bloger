@@ -1,8 +1,11 @@
-﻿using Bloger.Business.Concrete;
+﻿using Bloger.Business.Abstract;
+using Bloger.Business.Concrete;
 using Bloger.Business.ValidationRules;
 using Bloger.DataAccess.Concrete;
 using Bloger.DataAccess.EntityFramework;
 using Bloger.Entity.Concrete;
+using Bloger.Ul.Areas.Admin.Models;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +43,8 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             if (results.IsValid)
             {
 
-                category.CategoryStatus = true;
+                category.IsActive = true;
+                category.IsDeleted = false;
 
                 categoryManager.Add(category);
 
@@ -57,55 +61,65 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             return View();
         }
 
+
+
         [HttpGet]
         public IActionResult EditCategory(int id)
         {
-            var blogvalue = categoryManager.TGetById(id);
-            return View(blogvalue);
+            var category = categoryManager.TGetById(id);
+
+            AdminControllerUpdateCategoryViewModel model = new AdminControllerUpdateCategoryViewModel
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName,
+                CategoryDescription = category.CategoryDescription
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditCategory(Category category)
+        public IActionResult EditCategory(AdminControllerUpdateCategoryViewModel model)
         {
             CategoryValidator validationRules = new CategoryValidator();
+            var category = categoryManager.TGetById(model.CategoryId);
+            category.CategoryId = model.CategoryId;
+            category.CategoryName = model.CategoryName;
+            category.CategoryDescription = model.CategoryDescription;
             ValidationResult results = validationRules.Validate(category);
+
 
             if (results.IsValid)
             {
-                var x = categoryManager.TGetById(category.CategoryId);
-                category.CategoryId = x.CategoryId;
-                category.CategoryStatus = true;
-
                 categoryManager.Update(category);
                 return RedirectToAction("Index");
-
             }
             else
             {
                 foreach (var item in results.Errors)
                 {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    ModelState.AddModelError("",item.ErrorMessage);
                 }
             }
             return View();
         }
 
         [HttpPost]
-        public IActionResult status(int id, bool status)
+        public IActionResult Passive(int id)
         {
             var category = categoryManager.TGetById(id);
-            category.CategoryStatus = status;
-            category.CategoryId = id;
+            category.IsDeleted = true;
             categoryManager.Update(category);
+            return RedirectToAction("Index");
+        }
 
-            var result = category.CategoryName + " " + "Pasif oldu";
-
-            if (status)
-            {
-                result = category.CategoryName + " " + "Aktif oldu";
-            }
-
-            return Json(result);
+        [HttpPost]
+        public IActionResult Active(int id)
+        {
+            var category = categoryManager.TGetById(id);
+            category.IsDeleted = false;
+            categoryManager.Update(category);
+            return RedirectToAction("Index");
         }
 
     }

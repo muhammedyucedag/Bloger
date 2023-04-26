@@ -1,4 +1,4 @@
-﻿@model Bloger.Entity.Concrete.Category
+﻿@model AdminControllerUpdateCategoryViewModel
 @{
     ViewData["Title"] = "EditCategory";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -11,22 +11,24 @@
     <div class="row">
         <div class="col-12 categoryadd">
             <div>
-                <input type="hidden" @Model.CategoryId/>
+                @Html.HiddenFor(x=>x.CategoryId)
+                @Html.ValidationSummary(true, "Zorunlu Alanlar", new { @class = "text-danger" })
+
             </div>
             <br />
             <div>
                 <label class="form-label">Kategori Adı</label>
                 @Html.TextBoxFor(x=>x.CategoryName,new{@class="form-control"})
-                @Html.ValidationMessageFor(x=>x.CategoryName)
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
             <br />
             <div class="mb-1">
                 <label class="form-label">Kategori Açıklaması</label>
                 @Html.TextAreaFor(x=>x.CategoryDescription,15,3, new{@class="form-control"})
-                @Html.ValidationMessageFor(x=>x.CategoryDescription)
+                <span asp-validation-for="CategoryDescription" class="text-danger"></span>
             </div>
             <br />
-            <button class="saved"><i class="bi bi-upload me-2"></i>Kaydet</button>
+            <button type="submit" class="saved"><i class="bi bi-upload me-2"></i>Kaydet</button>
             <button class="backtolist">
                 <a class="backtolistlink" href="/Admin/Category/Index/"><i class="bi bi-arrow-left me-2"></i>Listeye Dön</a>
             </button>

@@ -1,4 +1,6 @@
-﻿namespace Bloger.Ul.Areas.Admin.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Bloger.Ul.Areas.Admin.Models
 {
     public class AdminCreateBlogViewModel
     {

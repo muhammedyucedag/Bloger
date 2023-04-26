@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Bloger.DataAccess.Abstract;
@@ -17,7 +18,14 @@ namespace Bloger.DataAccess.EntityFramework
         {
             using (var context = new Context())
             {
-                return context.Blog.Include(x => x.User).Include(x => x.Category).Where(x => x.BlogStatus).ToList();
+                return context.Blog.Include(x => x.User).Include(x => x.Category).Where(x => x.IsDeleted == false).ToList();
+            }
+        }
+        public List<Blog> GetAdminBlogListWithCategory(Expression<Func<Blog, bool>> expression)
+        {
+            using (var context = new Context())
+            {
+                return context.Blog.Include(x => x.Category).Where(expression).ToList();
             }
         }
 
@@ -26,7 +34,7 @@ namespace Bloger.DataAccess.EntityFramework
             // user id göre blogları çekiyoruz ama çekerken categori ve userin bilgilerini inculde ediyoruz
             using (var context = new Context())
             {
-                return context.Blog.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id && x.BlogStatus).ToList();
+                return context.Blog.Include(x => x.Category).Include(x => x.User).Where(x => x.User.Id == id && x.IsDeleted == false).ToList();
             }
         }
 
@@ -35,7 +43,7 @@ namespace Bloger.DataAccess.EntityFramework
             //çektiğim blog blogid göre gelecek bunu çekerken içerisindeki user ve category dolu gelecek.
             using (var context = new Context())
             {
-                return context.Blog.Include(x => x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id && x.BlogStatus);
+                return context.Blog.Include(x => x.Comments).Include(x => x.Category).Include(x => x.User).FirstOrDefault(x => x.BlogId == id && x.IsDeleted == false);
 
             }
         }    
@@ -45,7 +53,7 @@ namespace Bloger.DataAccess.EntityFramework
             using (var context = new Context())
             {
                 var blog = context.Blog.FirstOrDefault(x => x.BlogId == id);
-                blog.BlogStatus = false;
+                blog.IsDeleted = true;
                 context.Update(blog);
                 return context.SaveChanges();
             }
