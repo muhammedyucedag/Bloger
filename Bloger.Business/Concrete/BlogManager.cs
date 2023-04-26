@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Bloger.Business.Abstract;
@@ -72,6 +73,11 @@ namespace Bloger.Business.Concrete
         public int DeleteBlog(int id)
         {
             return _blogRepository.DeleteBlog(id);
+        }
+
+        public List<Blog> GetAdminBlogListWithCategory(Expression<Func<Blog, bool>> expression)
+        {
+            return _blogRepository.GetAdminBlogListWithCategory(expression);
         }
     }
 }

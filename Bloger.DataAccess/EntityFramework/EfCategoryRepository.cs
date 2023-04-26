@@ -17,7 +17,7 @@ namespace Bloger.DataAccess.EntityFramework
         {
             using (var context = new Context())
             {
-                return context.Category.Where(x=>x.CategoryStatus && x.Order > 0).Take(5).OrderBy(x=>x.Order).ToList();
+                return context.Category.Where(x=>x.IsDeleted == false && x.Order > 0).Take(5).OrderBy(x=>x.Order).ToList();
             }
         }
 

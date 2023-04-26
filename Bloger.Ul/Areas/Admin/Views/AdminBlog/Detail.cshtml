@@ -34,13 +34,8 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a href="/Admin/Project/Add">
-                            <i class="fa fa-plus"></i>
-                        </a>
+                        </a>                     
+                       
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -58,25 +53,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var project in Model.Blogs)
+                                @foreach (var blog in Model.Blogs)
                                 {
                                     <tr class="gradeX">
-                                        <td>@project.BlogTitle</td>
-                                        <td>@project.BlogContent</td>
-                                        <td>@project.Category.CategoryName</td>
-                                        <td>@project.BlogCreateDate</td>
+                                        <td>@blog.BlogTitle</td>
+                                        <td>@blog.BlogContent</td>
+                                        <td>@blog.Category.CategoryName</td>
+                                        <td>@blog.BlogCreateDate</td>
                                         <td>
-                                            @if (project.IsDeleted)
+                                            @if (blog.IsDeleted)
                                             {
-                                                <button data-active="@project.BlogId" class="btn btn-danger">Pasif</button>
+                                                <button data-active="@blog.BlogId" class="btn btn-danger">Pasif</button>
                                             }
                                             else
                                             {
-                                                <button data-passive="@project.BlogId" class="btn btn-success">Aktif</button>
+                                                <button data-passive="@blog.BlogId" class="btn btn-success">Aktif</button>
                                             }
                                         </td>
                                         <td>
-                                            <a href="/Admin/Project/Update/@project.BlogId" style="color:white !important;" class="btn btn-primary">Güncelle</a>
+                                            <a href="/Admin/AdminBlog/Update/@blog.BlogId" style="color:white !important;" class="btn btn-primary">Güncelle</a>
                                         </td>
                                     </tr>
                                 }
@@ -123,7 +118,7 @@
 
                     $.ajax({
                         method: "post",
-                        url: '/Admin/Project/Active/' + buttonElement.data('active'),
+                        url: '/Admin/AdminBlog/Active/' + buttonElement.data('active'),
 
                     }).done(function (result) {
                         swal({
@@ -174,7 +169,7 @@
 
                     $.ajax({
                         method: "post",
-                        url: '/Admin/Project/Passive/' + buttonElement.data('passive'),
+                        url: '/Admin/AdminBlog/Passive/' + buttonElement.data('passive'),
 
                     }).done(function (result) {
                         swal({

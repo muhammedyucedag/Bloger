@@ -100,7 +100,8 @@ namespace Bloger.Ul.Controllers
             {
                 var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                blog.BlogStatus = true;
+                blog.IsDeleted = false;
+                blog.IsActive = true;
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
 
@@ -179,7 +180,7 @@ namespace Bloger.Ul.Controllers
             {
                 var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                blog.BlogStatus = true;
+                blog.IsDeleted = false;
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
                 if (formFile != null && formFile.Length > 0)
