@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloger.Entity.Concrete.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Bloger.Entity.Concrete
 {
-    public class Blog
+    public class Blog : BaseEntity
     {
-        //virtual public Category Category { get; set; } 
         [Key]
         public int BlogId { get; set; }
         public string BlogTitle { get; set; }

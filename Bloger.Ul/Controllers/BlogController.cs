@@ -91,7 +91,7 @@ namespace Bloger.Ul.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlogAdd(Blog blog, IFormFile formFile) // count 0 geliyor blogadd de form içindeki formfile id ile burası eşleşmiyor
+        public async Task<IActionResult> BlogAdd(Blog blog, IFormFile formFile)
         {
             BlogValidator validationRules = new BlogValidator();
             ValidationResult results = validationRules.Validate(blog);

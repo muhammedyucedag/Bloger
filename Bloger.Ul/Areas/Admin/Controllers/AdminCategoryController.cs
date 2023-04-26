@@ -15,7 +15,7 @@ namespace Bloger.Ul.Areas.Admin.Controllers
 {
     [Area("Admin")]
     //[Authorize(Roles = "Admin,Moderator")]
-    public class CategoryController : Controller
+    public class AdminCategoryController : Controller
     {
         CategoryManager categoryManager = new CategoryManager(new EfCategoryRepository());
         Context context = new Context();
