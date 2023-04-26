@@ -1,0 +1,66 @@
+﻿@model List<Blog>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+<a href="/Admin/AdminBlog/Add" style="margin-left:14px;" class="btn btn btn-outline btn-primary">Blog Ekle</i> </a>
+<a href="/Admin/AdminBlog/Add" style="margin-left:14px;" class="btn btn btn-outline btn-primary">Ayrıntılar</> </a>
+<body>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div class="ibox">
+                        <div class="ibox-content product-box">
+
+                            <div class="text-center">
+                                <img width="420" height="300" src="@item.BlogImage" class="card-img-top img-fluid" />
+                            </div>
+                            <div class="product-desc">
+                                <span class="product-price">
+                                    @(((DateTime)item.BlogCreateDate).ToString("dd-MM-yyyy"))
+                                </span>
+                                <small class="text-muted">@item.Category.CategoryName</small>
+                                <a href="#" class="product-name">@item.BlogTitle</a>
+
+
+
+                                <div class="small m-t-xs">
+                                    @{
+                                        if (item.BlogContent.Length < 300)
+                                        {
+                                            <p>
+                                                @item.BlogContent
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                @item.BlogContent.Substring(0, 300)...
+                                            </p>
+                                        }
+                                    }
+                                </div>
+                                <div class="m-t text-righ">
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</body>
+
+</html>
+
