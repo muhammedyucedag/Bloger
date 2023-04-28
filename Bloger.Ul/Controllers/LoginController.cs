@@ -14,11 +14,13 @@ namespace Bloger.Ul.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController(SignInManager<User> signInManager, IHttpContextAccessor httpContext)
+        public LoginController(SignInManager<User> signInManager, IHttpContextAccessor httpContext, ILogger<LoginController> logger)
         {
             _signInManager = signInManager;
             _httpContext = httpContext;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -39,6 +41,11 @@ namespace Bloger.Ul.Controllers
                     _httpContext.HttpContext.Session.SetInt32("UserId",user.Id); // id sessionda tutuyoruz
 					return RedirectToAction("Index", "Blog");
 				}
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("\"Kullanıcı hesabı kilitlendi.\"");
+                    ModelState.AddModelError(string.Empty, "Hesabınız Kilitlendi.");
+                }
 		        else
 		        {
                     ViewData["Error"] = "Kullanıcı adı yada şifre yanlış";

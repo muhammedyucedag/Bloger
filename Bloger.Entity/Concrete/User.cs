@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloger.Entity.Concrete.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bloger.Entity.Concrete
@@ -11,6 +12,8 @@ namespace Bloger.Entity.Concrete
     {
         public string NameSurname { get; set; }
         public string CoverLetter { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public string? ImageUrl { get; set; }
 
         public virtual List<Blog> Blogs { get; set; } // Kullanıcının birden fazla notları varıdr.

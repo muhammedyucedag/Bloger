@@ -61,8 +61,6 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             return View();
         }
 
-
-
         [HttpGet]
         public IActionResult EditCategory(int id)
         {
