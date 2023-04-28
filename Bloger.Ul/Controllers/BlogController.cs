@@ -44,7 +44,7 @@ namespace Bloger.Ul.Controllers
         {
             return View();
         }
-
+            
         [AllowAnonymous]
         [Route("blogdetails/{id}")] // slug yapısı
         public async Task<IActionResult> BlogDetails(int id)
@@ -181,6 +181,7 @@ namespace Bloger.Ul.Controllers
                 var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
 
                 blog.IsDeleted = false;
+                blog.IsActive = true;
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 blog.UserId = userId;
                 if (formFile != null && formFile.Length > 0)

@@ -39,6 +39,7 @@
                             </div>
 
                             <form action="#" method="post">
+                                <div asp-validation-summary="All" class="text-danger"></div>
                                 <div>
                                     @if (ViewData.ContainsKey("Error"))
                                     {

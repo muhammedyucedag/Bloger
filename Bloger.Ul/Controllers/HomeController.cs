@@ -15,6 +15,20 @@ namespace Bloger.Ul.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Kullanıcı henüz giriş yapmamışsa, Login sayfasına yönlendir
+                return RedirectToAction("Login", "Index");
+            }
+            else
+            {
+                // Kullanıcının oturumunun süresi dolmuşsa, SessionExpired sayfasına yönlendir
+                return RedirectToAction("SessionExpired", "Home");
+            }
+        }
+
+        public IActionResult SessionExpired()
+        {
             return View();
         }
 

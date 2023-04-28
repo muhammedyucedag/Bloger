@@ -1,0 +1,160 @@
+﻿@model List<User>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Adı Soyadı</th>
+        <th>Kullanıcı Adı</th>
+        <th>Ön Yazı</th>
+        <th>Kullanıcı E-postası</th>
+        <th>Blok</th>
+    </tr>
+
+    @{
+        int sıra = 0;
+    }
+
+    @foreach (var user in Model)
+    {
+        sıra++;
+        <tr>
+            <td>@sıra</td>
+            <td>@user.NameSurname</td>
+            <td>@user.UserName</td>
+            <td>@user.CoverLetter</td>
+            <td>@user.Email</td>
+            <td>
+                @if (!user.LockoutEnd.HasValue)
+                {
+                    <form method="post" asp-controller="AdminUser" asp-action="Lock" asp-route-Id="@user.Id">
+                        <button class="btn" style="background-color:green; color:white;" type="submit">
+                            <i class="fa-solid fa-unlock"></i>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <form method="post" asp-controller="AdminUser" asp-action="UnLock" asp-route-Id="@user.Id">
+                        <button class="btn" style="background-color:red; color:white;" type="submit">
+                            <i class="fa-solid fa-lock"></i>
+                        </button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('[data-active]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
+
+            const buttonElement = $(this)
+
+            swal({
+                title: "Aktif edilsin mi ?",
+                text: "Bu işlem seçtiğiniz kategoriyi aktif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Aktif Et"],
+
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminUser/Active/' + buttonElement.data('active'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Aktif etme işlemi başarılı",
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Aktif etme işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Akitf etme işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+
+
+        })
+
+        $('[data-passive]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
+
+            const buttonElement = $(this)
+
+            swal({
+
+                title: "Pasif edilsin mi ?",
+                text: "Bu işlem seçmiş olduğunuz kategoriyi pasif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Pasif Et"],
+                dangerMode: true
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminUser/Passive/' + buttonElement.data('passive'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Pasif işlemi başarılı",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Pasif işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Pasif işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+        })
+    })
+</script>
+
+
+

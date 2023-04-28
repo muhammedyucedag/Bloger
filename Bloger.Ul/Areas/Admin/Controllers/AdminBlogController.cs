@@ -7,8 +7,10 @@ using Bloger.Ul.Areas.Admin.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Reflection.Metadata;
 
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
@@ -30,7 +32,7 @@ namespace Bloger.Ul.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var values = blogManager.GetAdminBlogListWithCategory(x=>x.IsActive);
+            var values = blogManager.GetAdminBlogListWithCategory(x => x.IsActive);
             return View(values);
         }
 
@@ -147,6 +149,54 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             project.IsDeleted = false;
             blogManager.Update(project);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Update(int id)
+        {
+            var blogvalue = blogManager.TGetById(id);
+            List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
+
+            ViewBag.CategoryValues = categoryValues;
+            return View(blogvalue);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Blog blog, IFormFile? formFile)
+        {
+
+            BlogValidator validationRules = new BlogValidator();
+            ValidationResult results = validationRules.Validate(blog);
+            if (results.IsValid)
+            {
+                var userId = _httpContext.HttpContext.Session.GetInt32("UserId") ?? 0;
+
+                blog.IsDeleted = false;
+                blog.IsActive = true;
+                blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                blog.UserId = userId;
+                if (formFile != null && formFile.Length > 0)
+                {
+                    var file = formFile;
+                    if (file.Length > 0)
+                    {
+                        var fileName = file.FileName;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CoverImage", fileName);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        blog.BlogImage = "/CoverImage/" + fileName;
+                    }
+                }
+                blogManager.Update(blog);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }

@@ -4,6 +4,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace Bloger.Ul
 {
@@ -38,17 +44,19 @@ namespace Bloger.Ul
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
+
+            // identity ile cookie çýkýþ iþlemi
             builder.Services.ConfigureApplicationCookie(opts =>
             {
                 //Cookie settings
                 opts.Cookie.HttpOnly = true;
-                opts.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 opts.AccessDeniedPath = new PathString("/Login/AccessDenied"); // eriþimin reddedildiði durumda gitmesi gerek yer
                 opts.AccessDeniedPath = new PathString("/Login/AccessDenied/");
                 opts.LoginPath = "/Blog/Index/";
                 opts.SlidingExpiration = true;
             });
-                
+
             var app = builder.Build();
 
 
@@ -64,13 +72,15 @@ namespace Bloger.Ul
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
-
-            app.UseAuthentication(); // üyeyi kontol eder
 
             app.UseRouting();
 
+
+            app.UseAuthentication(); // üyeyi kontol eder
             app.UseAuthorization(); // yetkiyi konrol eder  
+
+            app.UseSession();
+
 
             app.MapControllerRoute( // area için program cs eklentisi
             name: "areas",
