@@ -1,11 +1,11 @@
 ﻿@{
     Layout = null;
-    var userid = ViewData["UserId"];
 }
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="~/js/timeout-redirect.js"></script>
+
+
 
 </head>
 <style>
@@ -33,6 +33,7 @@
     </div>
 </section>
 
+<div id="isAuthenticated" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()"></div>
 
 <header id="header" class="header d-flex align-items-center">
 
@@ -203,6 +204,7 @@
     <script src="~/assets/js/main.js"></script>
 
 </body>
-
 </html>
+
+
 
