@@ -23,22 +23,29 @@
 <body class="gray-bg">
 
 
-<div class="middle-box text-center animated fadeInDown">
-    <h1>404</h1>
-    <h3 class="font-bold">Sayfa Bulunamadı</h3>
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>404</h1>
+        <h3 class="font-bold">Sayfa Bulunamadı</h3>
 
-    <div class="error-desc">
-        Üzgünüz, ancak aradığınız sayfa bulunamadı. URL'de hata olup olmadığını kontrol etmeyi deneyin, ardından tarayıcınızdaki yenile düğmesine basın veya uygulamamızda başka bir şey bulmayı deneyin.
-        <form class="form-inline m-t" role="form">
-            <a href="/login/index" type="submit" class="btn btn-primary">Giriş Yap</a>
-        </form>
+        <div class="error-desc">
+            Üzgünüz, ancak aradığınız sayfa bulunamadı. URL'de hata olup olmadığını kontrol etmeyi deneyin, ardından tarayıcınızdaki yenile düğmesine basın veya uygulamamızda başka bir şey bulmayı deneyin.<br /><br />
+            @*            <a href="/login/index" type="submit" class="btn btn-primary">Giriş Yap</a>
+            *@
+            <button onclick="goBack()" class="btn btn-primary">Geri Dön</button>
+
+            <a href="/Blog/index" class="btn btn-primary">Anasayfa</a>
+        </div>
     </div>
-</div>
 
-<!-- Mainly scripts -->
+    <!-- Mainly scripts -->
     <script src="/404Error/js/popper.min.js"></script>
     <script src="/404Error/js/bootstrap.js"></script>
 
 </body>
 
 </html>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
