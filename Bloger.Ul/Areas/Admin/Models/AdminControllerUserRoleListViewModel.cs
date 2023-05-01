@@ -4,10 +4,8 @@ namespace Bloger.Ul.Areas.Admin.Models
 {
     public class AdminControllerUserRoleListViewModel
     {
-        public string UserId { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Roles { get; set; }
+        public User User { get; set; }
 
+        public List<string> Roles { get; set; }
     }
 }
