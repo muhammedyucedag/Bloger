@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
-    [Area("Admin")] 
+    [Area("Admin")]
     public class AdminRolController : Controller
     {
         private readonly RoleManager<Role> roleManager;
@@ -38,7 +38,7 @@ namespace Bloger.Ul.Areas.Admin.Controllers
                 {
                     Name = model.name,
                     IsActive = true,
-                    IsDeleted = false                  
+                    IsDeleted = false
                 };
 
                 var result = await roleManager.CreateAsync(role);
@@ -54,6 +54,33 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             return View();
         }
 
-      
+        [HttpGet]
+        public IActionResult UpdateRole(int id)
+        {
+            var values = roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            AdminControllerRoleUpdateViewModel model = new AdminControllerRoleUpdateViewModel
+            {
+                Id = values.Id,
+                name = values.Name
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRole(AdminControllerRoleUpdateViewModel model)
+        {
+            var values = roleManager.Roles.Where(x => x.Id == model.Id).FirstOrDefault();
+
+            values.Name = model.name;
+            values.IsDeleted = false;
+            values.IsActive = true;
+
+            var result = await roleManager.UpdateAsync(values);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
     }
 }
