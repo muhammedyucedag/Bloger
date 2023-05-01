@@ -1,4 +1,4 @@
-﻿@model List<User>
+﻿@model List<AdminControllerUserRoleListViewModel>
 
 @{
     ViewData["Title"] = "UserRoleList";
@@ -10,14 +10,18 @@
     <tr>
         <th>Kullanıcı</th>
         <th>Eposta</th>
+        <th>Roller</th>
         <th>Rol Ata</th>
     </tr>
-    @foreach (var user in Model)
+    @foreach (var item in Model)
     {
         <tr>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td><a href="/Admin/AdminRol/AssignRole/@user.Id" class="btn btn-secondary">Rol Ata</a></td>
+            <td>@item.User.UserName</td>
+            <td>@item.User.Email</td>
+            <td>
+                @String.Join(", ", item.Roles.ToArray())
+                </td>
+            <td><a href="/Admin/AdminRol/AssignRole/@item.User.Id" class="btn btn-secondary">Rol Ata</a></td>
         </tr>
     }
 </table>

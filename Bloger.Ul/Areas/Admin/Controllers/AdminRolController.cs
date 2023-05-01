@@ -90,8 +90,16 @@ namespace Bloger.Ul.Areas.Admin.Controllers
 
         public async Task<IActionResult> UserRoleList()
         {
-            var values = userManager.Users.ToList();
-            return View(values);
+            List<AdminControllerUserRoleListViewModel> model = new List<AdminControllerUserRoleListViewModel>();
+            var users = userManager.Users.ToList();
+
+            foreach (var item in users)
+            {
+                var roles = await userManager.GetRolesAsync(item);
+                model.Add(new AdminControllerUserRoleListViewModel { User = item, Roles = (List<string>)roles });
+            }
+
+            return View(model);
         }
 
         [HttpGet]
