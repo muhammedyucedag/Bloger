@@ -1,0 +1,196 @@
+﻿@model List<Role>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+<html>
+<body>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Roller</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a href="#" class="dropdown-item">Config option 1</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-hover" id="tblRol">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <td>Başlık</td>
+                                    @if (User.IsInRole("Admin")) // bunları sadece admin görebilir (idendtity sayesinde)
+                                    {
+                                        <td>Aktif Mi?</td>
+                                        <td>Düzenle</td>
+                                    }
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                @if (item.IsDeleted)
+                                                {
+                                                    <button data-active="@item.Id" class="btn btn-danger">Pasif</button>
+                                                }
+                                                else
+                                                {
+                                                    <button data-passive="@item.Id" class="btn btn-success">Aktif</button>
+                                                }
+                                            }
+
+                                        </td>
+                                        <td><a href="/Admin/AdminRol/Update/@item.Id" class="btn btn-warning btn-sm">Düzenle</a></td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <a href="/Admin/AdminRol/Add" class="btn btn-outline-secondary">Yeni Rol Ekle</a>
+                        <a href="/Admin/AdminRol/UserRoleList" class="btn btn-outline-secondary">Kullanıcı Rol Listesi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+        $('[data-active]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
+
+            const buttonElement = $(this)
+
+            swal({
+                title: "Aktif edilsin mi ?",
+                text: "Bu işlem seçtiğiniz kategoriyi aktif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Aktif Et"],
+
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminRol/Active/' + buttonElement.data('active'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Aktif etme işlemi başarılı",
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Aktif etme işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Akitf etme işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+
+
+        })
+
+        $('[data-passive]').click(function (/*event*/) {
+            //event.preventDefault(); // Sayfa yenilenmesni engeller
+
+            const buttonElement = $(this)
+
+            swal({
+
+                title: "Pasif edilsin mi ?",
+                text: "Bu işlem seçmiş olduğunuz kategoriyi pasif edecektir.",
+                icon: "info",
+                buttons: ["İptal Et", "Pasif Et"],
+                dangerMode: true
+
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        method: "post",
+                        url: '/Admin/AdminRol/Passive/' + buttonElement.data('passive'),
+
+                    }).done(function (result) {
+                        swal({
+                            title: "Pasif işlemi başarılı",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                    }).fail(function () {
+                        swal({
+                            title: "Pasif işlemi başarısız.",
+                            icon: "danger",
+                            button: "OK",
+                        });
+
+                    })
+                }
+                else {
+                    swal({
+                        title: "Pasif işlemi iptal edildi.",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            })
+        })
+    })
+</script>
