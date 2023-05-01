@@ -15,7 +15,7 @@ using System.Reflection.Metadata;
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminBlogController : Controller
     {
         BlogManager blogManager = new BlogManager(new EfBlogRepository());

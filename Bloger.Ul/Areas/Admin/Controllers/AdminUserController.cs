@@ -1,12 +1,14 @@
 ﻿using Bloger.Business.Concrete;
 using Bloger.DataAccess.Concrete;
 using Bloger.DataAccess.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminUserController : Controller
     {
         UserManager userManager = new UserManager(new EfUserRepository());

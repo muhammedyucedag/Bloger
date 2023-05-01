@@ -22,9 +22,12 @@
             <li>
                 <a href="/Admin/AdminUser/Index"><i class="fa fa-user"></i> <span class="nav-label">Kullanıcılar</span>  </a>
             </li>
-            <li>
-                <a href="metrics.html"><i class="fa fa-comment"></i> <span class="nav-label">Yorumlar</span>  </a>
-            </li>
+            @if (User.IsInRole("Admin")) // sadece admin görebilir
+            {
+                <li>
+                    <a href="/Admin/AdminRol/Index"><i class="fa fa-shield"></i> <span class="nav-label">Roller</span>  </a>
+                </li>
+            }
             <li>
                 <a href="/login/logoff/"><i class="fa fa-close"></i> <span class="nav-label">Çıkış Yap</span></a>
             </li>

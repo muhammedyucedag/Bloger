@@ -1,12 +1,16 @@
 ﻿using Bloger.Business.Concrete;
 using Bloger.Entity.Concrete;
 using Bloger.Ul.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminRolController : Controller
     {
         private readonly RoleManager<Role> roleManager;
@@ -84,10 +88,51 @@ namespace Bloger.Ul.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult UserRoleList()
+        public async Task<IActionResult> UserRoleList()
         {
             var values = userManager.Users.ToList();
             return View(values);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRole(int id)
+        {
+            var user = userManager.Users.FirstOrDefault(x => x.Id == id);
+            var roles = roleManager.Roles.ToList();
+
+            TempData["UserId"] = user.Id;
+
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            List<AdminControllerRoleAssignViewModel> models = new List<AdminControllerRoleAssignViewModel>();
+            foreach (var item in roles)
+            {
+                AdminControllerRoleAssignViewModel model = new AdminControllerRoleAssignViewModel();
+                model.Id = item.Id;
+                model.Name = item.Name;
+                model.Exists = Convert.ToString(userRoles.Contains(item.Name));
+                models.Add(model);
+            }
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(List<AdminControllerRoleAssignViewModel> model)
+        {
+            var userid = (int)TempData["UserId"];
+            var user = userManager.Users.FirstOrDefault(x => x.Id == userid);
+            foreach (var item in model)
+            {
+                if (bool.Parse(item.Exists))
+                {
+                    await userManager.AddToRoleAsync(user, item.Name);
+                }
+                else
+                {
+                    await userManager.RemoveFromRoleAsync(user, item.Name);
+                }
+            }
+            return RedirectToAction("UserRoleList");
         }
     }
 }

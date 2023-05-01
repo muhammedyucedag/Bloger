@@ -17,7 +17,7 @@ using X.PagedList;
 namespace Bloger.Ul.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminCategoryController : Controller
     {
         CategoryManager categoryManager = new CategoryManager(new EfCategoryRepository());

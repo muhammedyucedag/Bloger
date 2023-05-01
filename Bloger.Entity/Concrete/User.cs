@@ -18,5 +18,6 @@ namespace Bloger.Entity.Concrete
 
         public virtual List<Blog> Blogs { get; set; } // Kullanıcının birden fazla notları varıdr.
         public virtual List<Comment> Comments { get; set; } // Kullanıcının birden fazla yorumu varıdr.
+
     }
 }
