@@ -1,4 +1,5 @@
-﻿using Bloger.Entity.Concrete;
+﻿using Bloger.Business.Concrete;
+using Bloger.Entity.Concrete;
 using Bloger.Ul.Areas.Admin.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -81,6 +82,12 @@ namespace Bloger.Ul.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+
+        public IActionResult UserRoleList()
+        {
+            var values = userManager.Users.ToList();
+            return View(values);
         }
     }
 }
